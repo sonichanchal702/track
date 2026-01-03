@@ -1,11 +1,10 @@
-export const signUp = async (req, res) => {
-  try {
-    const { name, email, password } = req.body;
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: "Please enter all fields" });
-    }
-  } catch (err) {
-    console.log("Signup Error:", err);
-    res.status(500).json({ message: "Server error" });
-  }
-};
+import express from "express";
+import { signup, login, logout } from "../controllers/user.auth.controller.js";
+
+const router = express.Router();
+
+router.post("/signup", signup);
+router.post("/login", login);
+router.post("/logout", logout);
+
+export default router;

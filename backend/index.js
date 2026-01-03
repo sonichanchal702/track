@@ -1,15 +1,32 @@
 import express from "express";
 import dotenv from "dotenv";
-import User from "./models/user.schema.js";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+
 import connectDB from "./connectDB/connectDB.js";
+import authRoutes from "./routes/user.auth.js";
+
+dotenv.config();
+
 const app = express();
+
+// middlewares
 app.use(express.json());
-
-dotenv.config({ quiet: true });
-const port = process.env.PORT || 5000;
-
-connectDB().then(
-  app.listen(port, () => {
-    console.log(`Server running at PORT ${port} 🚀`);
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // frontend
+    credentials: true,
   })
 );
+
+// routes
+app.use("/api/auth", authRoutes);
+
+const PORT = process.env.PORT || 5000;
+
+connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server running on PORT ${PORT} 🚀`);
+  });
+});
