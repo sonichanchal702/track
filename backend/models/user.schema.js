@@ -1,18 +1,13 @@
-import mongoose from "mongoose";
 
+import mongoose from "mongoose";
 const userSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+    name: { type: String, required: true },
 
     agencyName: {
       type: String,
       unique: true,
-      sparse: true, // freelancers ke liye optional
-      trim: true,
+      sparse: true,
     },
 
     email: {
@@ -20,37 +15,12 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       lowercase: true,
-      trim: true,
     },
 
-    password: {
-      type: String,
-      required: true,
-    },
-    projectsDone: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "projects",
-      },
-    ],
-    clients: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "clients",
-      },
-    ],
-    freelancers: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "freelancers",
-      },
-    ],
+    password: { type: String, required: true },
   },
-  {
-    timestamps: true, // createdAt + updatedAt automatically
-  }
+  { timestamps: true }
 );
 
 const User = mongoose.model("User", userSchema);
-
 export default User;
