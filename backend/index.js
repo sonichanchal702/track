@@ -2,11 +2,10 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
 import connectDB from "./connectDB/connectDB.js";
 import authRoutes from "./routes/user.auth.js";
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const app = express();
 
@@ -21,7 +20,7 @@ app.use(
 );
 
 // routes
-app.use("/api/auth", authRoutes);
+app.use("/user", authRoutes);
 
 const PORT = process.env.PORT || 5000;
 
