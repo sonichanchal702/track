@@ -5,20 +5,24 @@ const projectSchema = new mongoose.Schema(
     projectName: {
       type: String,
       required: true,
+      trim: true,
     },
 
+    // agency ka
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
 
+    // auto create the client;
     clientId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Client",
       required: true,
     },
 
+    // budgets
     clientBudget: {
       type: Number,
       required: true,
@@ -26,7 +30,7 @@ const projectSchema = new mongoose.Schema(
 
     teamBudget: {
       type: Number,
-      required: true,
+      default: 0,
     },
 
     description: {
@@ -34,22 +38,20 @@ const projectSchema = new mongoose.Schema(
       trim: true,
     },
 
-    deadline: Date,
-
-    assignedTo: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Team",
-    },
-
-    paymentStatus: {
-      type: String,
-      enum: ["pending", "half_paid", "paid"],
-      default: "pending",
+    deadline: {
+      type: Date,
     },
 
     deliverables: {
-      type: [String],
-      required: true,
+      type: [String], // ["website", "logo", "video"]
+      default: [],
+    },
+
+    // freelancer / team member
+    assignedTo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Team",
+      default: null,
     },
 
     projectStatus: {
@@ -57,9 +59,17 @@ const projectSchema = new mongoose.Schema(
       enum: ["lead", "active", "completed", "on_hold"],
       default: "lead",
     },
+
+    paymentStatus: {
+      type: String,
+      enum: ["pending", "half_paid", "paid"],
+      default: "pending",
+    },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-const Project = mongoose.model("Project" , projectSchema);
+const Project = mongoose.model("Project", projectSchema);
 export default Project;
