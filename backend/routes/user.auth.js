@@ -11,10 +11,16 @@ import { deleteTeam } from "../controllers/user.deleteTeamById.js";
 
 //Project routes
 import { createProject } from "../controllers/project.create.js";
-import {assignMember} from "../controllers/user.assignTask.js";
+import { assignMember } from "../controllers/user.assignTask.js";
 import { getProjectById } from "../controllers/project.getById.js";
 import { completeProject } from "../controllers/project.complete.js";
 import { deleteProject } from "../controllers/project.delete.js";
+import { generateLinks } from "../controllers/updatesAndFeedback/generateLinks.js";
+import { getFreelancerProject } from "../controllers/updatesAndFeedback/getFreelancerToken.js";
+import { freelancerPostUpdate } from "../controllers/updatesAndFeedback/freelancerPostUpdate.js";
+import { getClientToken } from "../controllers/updatesAndFeedback/getClientToken.js";
+import { clientPostFeedback } from "../controllers/updatesAndFeedback/clientPostFeedback.js";
+import { getProjectTimeline } from "../controllers/updatesAndFeedback/timeline.js";
 const router = express.Router();
 
 router.post("/signup", signup);
@@ -30,10 +36,16 @@ router.delete("/team/:id", userAuth, deleteTeam);
 
 //project routes
 router.post("/createProject", userAuth, createProject);
-router.patch("/projects/:id/ assign-team", userAuth, assignMember);
+router.patch("/projects/:id/assign-team", userAuth, assignMember);
 router.get("/projects/:id", userAuth, getProjectById);
 router.patch("/projects/:id/complete", userAuth, completeProject);
 router.delete("/projects/:id", userAuth, deleteProject);
 
-
+//project Updates/feedbacks/timelines
+router.post("/projects/:id/generate-links", userAuth, generateLinks);
+router.get("/project/:id/timeline", userAuth, getProjectTimeline);
+router.get("/freelancer/project/:token", getFreelancerProject);
+router.get("/client/project/:token", getClientToken);
+router.post("/freelancer/project/:token/update", freelancerPostUpdate);
+router.post("/client/project/:token/feedback", clientPostFeedback);
 export default router;

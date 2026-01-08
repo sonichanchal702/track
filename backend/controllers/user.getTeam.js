@@ -1,3 +1,4 @@
+import { checkAvailability } from "../config/teamAvailability.js";
 import Team from "../models/team.schema.js";
 
 export const viewTeam = async (req, res) => {
@@ -6,10 +7,16 @@ export const viewTeam = async (req, res) => {
 
     const team = await Team.find({ agencyId });
 
+    const updatedTeam = Promise.all(
+      team.map(async (member) => {
+        const { status } = await checkAvailability(member._id);
+      })
+    );
+
     return res.status(200).json({
       message: "Team details fetched successfully",
-      count: team.length,
-      team,
+      teamCount: team.length,
+      updatedTeam,
     });
   } catch (error) {
     return res.status(500).json({
