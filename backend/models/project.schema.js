@@ -53,6 +53,13 @@ const projectSchema = new mongoose.Schema(
       ref: "Team",
       default: null,
     },
+    freelancerAccessToken: {
+      type: String,
+    },
+
+    clientAccessToken: {
+      type: String,
+    },
 
     projectStatus: {
       type: String,

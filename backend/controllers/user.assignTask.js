@@ -33,12 +33,11 @@ export const assignMember = async (req, res) => {
     project.status = "active";
     await project.save();
 
-    //team me chanegs
+    //team me changes
     (team.status = "busy"), await team.save();
 
     return res.status(200).json({
-      message: "Freelancer assigned successfully",
-      project,
+      message: `Project ${project.projectName} has been successfully assigned to ${team.name}`,
     });
   } catch (error) {
     return res.status(401).send("ERROR OCCURED: " + error.message);

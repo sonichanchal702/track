@@ -56,6 +56,8 @@ export const createProject = async (req, res) => {
       deadline,
       deliverables,
       paymentStatus,
+      freelancerAccessToken: null,
+      clientAccessToken: null,
       projectStatus: "lead",
     });
     await newProject.save(); //saving the project in db;
