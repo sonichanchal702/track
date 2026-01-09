@@ -1,3 +1,4 @@
+import Alert from "../../models/alert.schema.js";
 import Project from "../../models/project.schema.js";
 import ProjectUpdate from "../../models/projectUpdates.js";
 
@@ -19,6 +20,15 @@ export const clientPostFeedback = async (req, res) => {
       type: "feedback",
     });
     update.save();
+
+    const alert = await Alert.create({
+      projectId: project._id,
+      agencyId: project.createdBy,
+      type: "ClientFeedback",
+      message: `Client posted a feedback on project ${project.projectName}`,
+    });
+    await alert.save();
+
     return res.status(200).json(update);
   } catch (error) {
     return res.status(500).send("Failed to post the feedback", error.message);
