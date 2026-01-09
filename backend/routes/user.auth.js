@@ -21,6 +21,10 @@ import { freelancerPostUpdate } from "../controllers/updatesAndFeedback/freelanc
 import { getClientToken } from "../controllers/updatesAndFeedback/getClientToken.js";
 import { clientPostFeedback } from "../controllers/updatesAndFeedback/clientPostFeedback.js";
 import { getProjectTimeline } from "../controllers/updatesAndFeedback/timeline.js";
+import { getAlerts } from "../controllers/CronJobs/getAlerts.js";
+import { readAlert } from "../controllers/CronJobs/readAlerts.js";
+import { getFreelancerTimeline } from "../controllers/updatesAndFeedback/getFreelancerTimeline.js";
+import { getClientTimeline } from "../controllers/updatesAndFeedback/getClientTimeline.js";
 const router = express.Router();
 
 router.post("/signup", signup);
@@ -42,10 +46,18 @@ router.patch("/projects/:id/complete", userAuth, completeProject);
 router.delete("/projects/:id", userAuth, deleteProject);
 
 //project Updates/feedbacks/timelines
-router.post("/projects/:id/generate-links", userAuth, generateLinks);
+router.post("/projects/:id/generate-links", userAuth, generateLinks); //token generate hote hai
+router.get("/freelancer/project/:token", getFreelancerProject); //freelancer ke token se project find
+router.get("/client/project/:token", getClientToken); //client ke token se projectFind
+router.post("/freelancer/project/:token/update", freelancerPostUpdate); //freelancer post update
+router.post("/client/project/:token/feedback", clientPostFeedback); //client post updates
+//project timeline
 router.get("/project/:id/timeline", userAuth, getProjectTimeline);
-router.get("/freelancer/project/:token", getFreelancerProject);
-router.get("/client/project/:token", getClientToken);
-router.post("/freelancer/project/:token/update", freelancerPostUpdate);
-router.post("/client/project/:token/feedback", clientPostFeedback);
+router.get("/freelancer/project/:token/timeline", getFreelancerTimeline);
+router.get("/client/project/:token/timeline", getClientTimeline);
+
+//cronJobs
+router.get("/alerts", userAuth, getAlerts);
+router.patch("/alerts/:id/read", userAuth, readAlert);
+
 export default router;
