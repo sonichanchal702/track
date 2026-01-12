@@ -25,6 +25,9 @@ import { getAlerts } from "../controllers/CronJobs/getAlerts.js";
 import { readAlert } from "../controllers/CronJobs/readAlerts.js";
 import { getFreelancerTimeline } from "../controllers/updatesAndFeedback/getFreelancerTimeline.js";
 import { getClientTimeline } from "../controllers/updatesAndFeedback/getClientTimeline.js";
+import { filterTeamByStatus } from "../controllers/filters/team.filter.js";
+import { filterProjectsByStatus } from "../controllers/filters/project.filters.js";
+import { getProjects } from "../controllers/getAllProjects.js";
 const router = express.Router();
 
 router.post("/signup", signup);
@@ -40,6 +43,7 @@ router.delete("/team/:id", userAuth, deleteTeam);
 
 //project routes
 router.post("/createProject", userAuth, createProject);
+router.get("/projects", userAuth, getProjects);
 router.patch("/projects/:id/assign-team", userAuth, assignMember);
 router.get("/projects/:id", userAuth, getProjectById);
 router.patch("/projects/:id/complete", userAuth, completeProject);
@@ -59,5 +63,9 @@ router.get("/client/project/:token/timeline", getClientTimeline);
 //cronJobs
 router.get("/alerts", userAuth, getAlerts);
 router.patch("/alerts/:id/read", userAuth, readAlert);
+
+//filters
+router.get("projects/:status", userAuth, filterProjectsByStatus);
+router.get("team/:status", userAuth, filterTeamByStatus);
 
 export default router;
