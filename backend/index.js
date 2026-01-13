@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectDB from "./connectDB/connectDB.js";
 import authRoutes from "./routes/user.auth.js";
+import { apiLimiter } from "./middlewares/rateLimiter.js";
 
 dotenv.config({ quiet: true });
 
@@ -20,7 +21,7 @@ app.use(
 );
 
 // routes
-app.use("/user", authRoutes);
+app.use("/user", apiLimiter, authRoutes);
 
 const PORT = process.env.PORT || 5000;
 
