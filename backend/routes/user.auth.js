@@ -31,6 +31,7 @@ import { getProjects } from "../controllers/getAllProjects.js";
 import { createInvoice } from "../controllers/Invoices/createInvoice.js";
 import { downloadInvoice } from "../controllers/Invoices/downloadInvoice.js";
 import { markInvoicePaid } from "../controllers/Invoices/markInvoicePaid.js";
+import { finances } from "../controllers/Finances/finance.js";
 import { getAllTeamMembers } from "../controllers/getAllTeamMembers.js";
 const router = express.Router();
 
@@ -41,7 +42,7 @@ router.post("/logout", logout);
 //team routes
 router.post("/add-new-member", userAuth, addTeamMember);
 router.get("/view-team", userAuth, viewTeam);
-router.patch("/edit-team/:id", userAuth, editTeam);
+router.patch("/edit-team/:id", userAuth, editTeam)
 router.get("/team/:id", userAuth, getTeamById);
 router.delete("/team/:id", userAuth, deleteTeam);
 
@@ -72,5 +73,8 @@ router.patch("/alerts/:id/read", userAuth, readAlert);
 router.post("/create-invoice", userAuth, createInvoice);
 router.get("/invoices/:id/download", userAuth, downloadInvoice);
 router.patch("/invoices/:id/paid", userAuth, markInvoicePaid);
+
+// dashboard routes
+router.get("/dashboard/finance", userAuth, finances);
 
 export default router;
