@@ -31,6 +31,7 @@ import { getProjects } from "../controllers/getAllProjects.js";
 import { createInvoice } from "../controllers/Invoices/createInvoice.js";
 import { downloadInvoice } from "../controllers/Invoices/downloadInvoice.js";
 import { markInvoicePaid } from "../controllers/Invoices/markInvoicePaid.js";
+import { getAllTeamMembers } from "../controllers/getAllTeamMembers.js";
 const router = express.Router();
 
 router.post("/signup", signup);
