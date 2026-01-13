@@ -28,6 +28,9 @@ import { getClientTimeline } from "../controllers/updatesAndFeedback/getClientTi
 import { filterTeamByStatus } from "../controllers/filters/team.filter.js";
 import { filterProjectsByStatus } from "../controllers/filters/project.filters.js";
 import { getProjects } from "../controllers/getAllProjects.js";
+import { createInvoice } from "../controllers/Invoices/createInvoice.js";
+import { downloadInvoice } from "../controllers/Invoices/downloadInvoice.js";
+import { markInvoicePaid } from "../controllers/Invoices/markInvoicePaid.js";
 const router = express.Router();
 
 router.post("/signup", signup);
@@ -64,8 +67,9 @@ router.get("/client/project/:token/timeline", getClientTimeline);
 router.get("/alerts", userAuth, getAlerts);
 router.patch("/alerts/:id/read", userAuth, readAlert);
 
-//filters
-router.get("projects/:status", userAuth, filterProjectsByStatus);
-router.get("team/:status", userAuth, filterTeamByStatus);
+//invoice
+router.post("/create-invoice", userAuth, createInvoice);
+router.get("/invoices/:id/download", userAuth, downloadInvoice);
+router.patch("/invoices/:id/paid", userAuth, markInvoicePaid);
 
 export default router;
