@@ -70,6 +70,9 @@ const invoiceSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+invoiceSchema.index({ agencyId: 1, status: 1 });
+invoiceSchema.index({ projectId: 1 });
+invoiceSchema.index({ paidAt: 1 });
 
 const Invoice = mongoose.model("Invoice", invoiceSchema);
 export default Invoice;

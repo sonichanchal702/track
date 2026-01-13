@@ -30,6 +30,7 @@ const alertSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+alertSchema.index({ agencyId: 1, isRead: 1 });
 
 const Alert = mongoose.model("Alert", alertSchema);
 export default Alert;
