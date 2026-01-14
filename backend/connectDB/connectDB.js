@@ -2,7 +2,10 @@ import mongoose from "mongoose";
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect("mongodb+srv://gouravthakurpp_db_user:bt87ATKbk3jGb1Xs@trackk.1ns5kve.mongodb.net/track");
+    const conn = await mongoose.connect(process.env.MONGO_URL, {
+      maxPoolSize: 10, // Max 10 connections khule rahenge
+      serverSelectionTimeoutMS: 5000, // 5 sec mein connect nahi hua toh error
+    });
     console.log("MongoDB Connected successfully✅");
   } catch (error) {
     console.log("MongoDB connection failed ❌");

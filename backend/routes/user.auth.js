@@ -41,8 +41,16 @@ router.post("/logout", logout);
 
 //team routes
 router.post("/add-new-member", userAuth, addTeamMember);
+
 router.get("/view-team", userAuth, viewTeam);
 router.patch("/edit-team/:id", userAuth, editTeam)
+<<<<<<< HEAD
+=======
+
+router.get("/view-team", userAuth, getAllTeamMembers);
+router.patch("/edit-team/:id", userAuth, editTeam);
+
+>>>>>>> a694890671e1ea2fadfe77de116fbccd73892f28
 router.get("/team/:id", userAuth, getTeamById);
 router.delete("/team/:id", userAuth, deleteTeam);
 
