@@ -4,7 +4,6 @@ import { userAuth } from "../middlewares/user.middleware.js";
 
 //Team routes
 import { addTeamMember } from "../controllers/addTeamMember.js";
-import { viewTeam } from "../controllers/user.getTeam.js";
 import { editTeam } from "../controllers/editTeam.js";
 import { getTeamById } from "../controllers/user.getTeamById.js";
 import { deleteTeam } from "../controllers/user.deleteTeamById.js";
@@ -25,8 +24,6 @@ import { getAlerts } from "../controllers/CronJobs/getAlerts.js";
 import { readAlert } from "../controllers/CronJobs/readAlerts.js";
 import { getFreelancerTimeline } from "../controllers/updatesAndFeedback/getFreelancerTimeline.js";
 import { getClientTimeline } from "../controllers/updatesAndFeedback/getClientTimeline.js";
-import { filterTeamByStatus } from "../controllers/filters/team.filter.js";
-import { filterProjectsByStatus } from "../controllers/filters/project.filters.js";
 import { getProjects } from "../controllers/getAllProjects.js";
 import { createInvoice } from "../controllers/Invoices/createInvoice.js";
 import { downloadInvoice } from "../controllers/Invoices/downloadInvoice.js";
@@ -41,13 +38,9 @@ router.post("/logout", logout);
 
 //team routes
 router.post("/add-new-member", userAuth, addTeamMember);
-
-router.get("/view-team", userAuth, viewTeam);
-router.patch("/edit-team/:id", userAuth, editTeam)
-
+router.patch("/edit-team/:id", userAuth, editTeam);
 router.get("/view-team", userAuth, getAllTeamMembers);
 router.patch("/edit-team/:id", userAuth, editTeam);
-
 router.get("/team/:id", userAuth, getTeamById);
 router.delete("/team/:id", userAuth, deleteTeam);
 
