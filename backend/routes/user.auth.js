@@ -25,13 +25,10 @@ import { getAlerts } from "../controllers/CronJobs/getAlerts.js";
 import { readAlert } from "../controllers/CronJobs/readAlerts.js";
 import { getFreelancerTimeline } from "../controllers/updatesAndFeedback/getFreelancerTimeline.js";
 import { getClientTimeline } from "../controllers/updatesAndFeedback/getClientTimeline.js";
-import { filterTeamByStatus } from "../controllers/filters/team.filter.js";
-import { filterProjectsByStatus } from "../controllers/filters/project.filters.js";
 import { getProjects } from "../controllers/getAllProjects.js";
 import { createInvoice } from "../controllers/Invoices/createInvoice.js";
 import { downloadInvoice } from "../controllers/Invoices/downloadInvoice.js";
 import { markInvoicePaid } from "../controllers/Invoices/markInvoicePaid.js";
-import { finances } from "../controllers/Finances/finance.js";
 import { getAllTeamMembers } from "../controllers/getAllTeamMembers.js";
 const router = express.Router();
 
@@ -41,19 +38,15 @@ router.post("/logout", logout);
 
 //team routes
 router.post("/add-new-member", userAuth, addTeamMember);
-
 router.get("/view-team", userAuth, viewTeam);
 router.patch("/edit-team/:id", userAuth, editTeam)
-<<<<<<< HEAD
-=======
+
 
 router.get("/view-team", userAuth, getAllTeamMembers);
 router.patch("/edit-team/:id", userAuth, editTeam);
-
->>>>>>> a694890671e1ea2fadfe77de116fbccd73892f28
 router.get("/team/:id", userAuth, getTeamById);
 router.delete("/team/:id", userAuth, deleteTeam);
-
+router.get("/team", userAuth, getAllTeamMembers);
 //project routes
 router.post("/createProject", userAuth, createProject);
 router.get("/projects", userAuth, getProjects);
@@ -68,6 +61,7 @@ router.get("/freelancer/project/:token", getFreelancerProject); //freelancer ke 
 router.get("/client/project/:token", getClientToken); //client ke token se projectFind
 router.post("/freelancer/project/:token/update", freelancerPostUpdate); //freelancer post update
 router.post("/client/project/:token/feedback", clientPostFeedback); //client post updates
+
 //project timeline
 router.get("/project/:id/timeline", userAuth, getProjectTimeline);
 router.get("/freelancer/project/:token/timeline", getFreelancerTimeline);
@@ -81,8 +75,5 @@ router.patch("/alerts/:id/read", userAuth, readAlert);
 router.post("/create-invoice", userAuth, createInvoice);
 router.get("/invoices/:id/download", userAuth, downloadInvoice);
 router.patch("/invoices/:id/paid", userAuth, markInvoicePaid);
-
-// dashboard routes
-router.get("/dashboard/finance", userAuth, finances);
 
 export default router;
