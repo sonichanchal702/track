@@ -4,7 +4,6 @@ import { userAuth } from "../middlewares/user.middleware.js";
 
 //Team routes
 import { addTeamMember } from "../controllers/addTeamMember.js";
-import { viewTeam } from "../controllers/user.getTeam.js";
 import { editTeam } from "../controllers/editTeam.js";
 import { getTeamById } from "../controllers/user.getTeamById.js";
 import { deleteTeam } from "../controllers/user.deleteTeamById.js";
@@ -42,6 +41,7 @@ router.get("/view-team", userAuth, viewTeam);
 router.patch("/edit-team/:id", userAuth, editTeam)
 
 
+router.patch("/edit-team/:id", userAuth, editTeam);
 router.get("/view-team", userAuth, getAllTeamMembers);
 router.patch("/edit-team/:id", userAuth, editTeam);
 router.get("/team/:id", userAuth, getTeamById);
