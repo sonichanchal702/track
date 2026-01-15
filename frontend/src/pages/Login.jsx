@@ -5,6 +5,8 @@ import { Mail, Lock, Building2, Phone, ArrowRight } from "lucide-react";
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
 
+  
+
   // Parent animation for staggered children
   const containerVariants = {
     hidden: { opacity: 0 },

@@ -7,7 +7,7 @@ export default function Landing() {
     <div className="min-h-screen bg-[#050505] text-white overflow-hidden relative selection:bg-orange-500/30">
       {/* --- BACKGROUND GLOW EFFECTS --- */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-500/10 blur-[120px] rounded-full" />
-      <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-purple-600/10 blur-[120px] rounded-full" />
+      <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-orange-600/10 blur-[120px] rounded-full" />
 
       {/* --- FLOATING GLASS NAVBAR --- */}
       <div className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
@@ -86,33 +86,21 @@ export default function Landing() {
           </div>
 
           <div className="flex items-center gap-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-            >
-              <Link
-                to="/login"
-                className="text-[13px] font-medium text-white/70 hover:text-white transition-all"
-              >
-                Login
-              </Link>
-            </motion.div>
-
-            <motion.button
-              whileHover={{
-                y: -2,
-                boxShadow: "0px 8px 30px rgba(249, 115, 22, 0.25)",
-              }}
-              whileTap={{ scale: 0.98 }}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.4,
-                ease: "easeOut",
-                delay: 0.9,
-              }}
-              className="
+            <Link to={"/login"}>
+              <motion.button
+                whileHover={{
+                  y: -2,
+                  boxShadow: "0px 8px 30px rgba(249, 115, 22, 0.25)",
+                }}
+                whileTap={{ scale: 0.98 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.4,
+                  ease: "easeOut",
+                  delay: 0.9,
+                }}
+                className="
     relative
     bg-orange-500
     text-black
@@ -124,12 +112,13 @@ export default function Landing() {
     shadow-md
     overflow-hidden
   "
-            >
-              {/* subtle highlight */}
-              <span className="absolute inset-0 bg-white/10 opacity-0 hover:opacity-100 transition" />
+              >
+                {/* subtle highlight */}
+                <span className="absolute inset-0 bg-white/10 opacity-0 hover:opacity-100 transition" />
 
-              <span className="relative z-10 tracking-wide">Start Free</span>
-            </motion.button>
+                <span className="relative z-10 tracking-wide">Start Free</span>
+              </motion.button>
+            </Link>
           </div>
         </motion.nav>
       </div>
@@ -163,6 +152,7 @@ export default function Landing() {
               Agency Operations.
             </span>
           </motion.h1>
+          <div className="absolute top-[30%] right-[-10%] w-[35%] h-[35%] bg-orange-500/[0.08] blur-[100px] rounded-full" />
 
           {/* Description */}
           <motion.p
@@ -221,7 +211,7 @@ export default function Landing() {
             transition={{ duration: 1, delay: 0.8 }}
             className="mt-24 relative group"
           >
-            <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-purple-600 rounded-[2rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-orange-500 rounded-[2rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
             <div className="relative bg-zinc-900 border border-white/10 rounded-[2rem] overflow-hidden aspect-video shadow-2xl">
               <div className="w-full h-full flex items-center justify-center text-white/10 text-9xl font-black">
                 DASHBOARD
