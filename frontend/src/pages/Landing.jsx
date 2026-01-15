@@ -35,8 +35,9 @@ export default function Landing() {
                 className="cursor-pointer transition-all duration-300 hover:text-white"
               >
                 <motion.span
-                  whileHover={{ scale: 1.06, color: "orange" }}
-                  transition={{ type: "spring", stiffness: 280, damping: 18 }}
+                  whileHover={{ scale: 1.08, color: "orange" }}
+                  transition={{ duration: 0.25, ease: "linear" }}
+                  className="inline-block"
                 >
                   Product
                 </motion.span>
@@ -54,8 +55,9 @@ export default function Landing() {
                 className="cursor-pointer transition-all duration-300 hover:text-white"
               >
                 <motion.span
-                  whileHover={{ scale: 1.06 }}
-                  transition={{ type: "spring", stiffness: 280, damping: 18 }}
+                  whileHover={{ scale: 1.08, color: "orange" }}
+                  transition={{ duration: 0.25, ease: "linear" }}
+                  className="inline-block"
                 >
                   Pricing
                 </motion.span>
@@ -73,10 +75,11 @@ export default function Landing() {
                 className="cursor-pointer transition-all duration-300 hover:text-white"
               >
                 <motion.span
-                  whileHover={{ scale: 1.06 }}
-                  transition={{ type: "spring", stiffness: 280, damping: 18 }}
+                  whileHover={{ scale: 1.08, color: "orange" }}
+                  transition={{ duration: 0.25, ease: "linear" }}
+                  className="inline-block"
                 >
-                  Why Us
+                  Why us
                 </motion.span>
               </Link>
             </motion.div>
