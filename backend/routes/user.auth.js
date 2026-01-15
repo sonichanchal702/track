@@ -4,6 +4,7 @@ import { userAuth } from "../middlewares/user.middleware.js";
 
 //Team routes
 import { addTeamMember } from "../controllers/addTeamMember.js";
+import { getAllTeamMembers } from "../controllers/getAllTeamMembers.js";
 import { editTeam } from "../controllers/editTeam.js";
 import { getTeamById } from "../controllers/user.getTeamById.js";
 import { deleteTeam } from "../controllers/user.deleteTeamById.js";
@@ -28,25 +29,25 @@ import { getProjects } from "../controllers/getAllProjects.js";
 import { createInvoice } from "../controllers/Invoices/createInvoice.js";
 import { downloadInvoice } from "../controllers/Invoices/downloadInvoice.js";
 import { markInvoicePaid } from "../controllers/Invoices/markInvoicePaid.js";
-import { getAllTeamMembers } from "../controllers/getAllTeamMembers.js";
+
 const router = express.Router();
 
 router.post("/signup", signup);
 router.post("/login", login);
 router.post("/logout", logout);
 
-//team routes
-router.post("/add-new-member", userAuth, addTeamMember);
-router.get("/view-team", userAuth, viewTeam);
-router.patch("/edit-team/:id", userAuth, editTeam)
+// Team routes
+    router.post("/add-new-member", userAuth, addTeamMember);
+
+    // Option A: paginated / filtered list
+    router.get("/team", userAuth, getAllTeamMembers);
+
+    // Option B: simple list (legacy / basic)
+    router.get("/team/:id", userAuth, getTeamById);
+    router.patch("/edit-team/:id", userAuth, editTeam);
+    router.delete("/team/:id", userAuth, deleteTeam);
 
 
-router.patch("/edit-team/:id", userAuth, editTeam);
-router.get("/view-team", userAuth, getAllTeamMembers);
-router.patch("/edit-team/:id", userAuth, editTeam);
-router.get("/team/:id", userAuth, getTeamById);
-router.delete("/team/:id", userAuth, deleteTeam);
-router.get("/team", userAuth, getAllTeamMembers);
 //project routes
 router.post("/createProject", userAuth, createProject);
 router.get("/projects", userAuth, getProjects);
