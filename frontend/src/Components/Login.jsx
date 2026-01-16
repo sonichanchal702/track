@@ -1,13 +1,44 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Lock, Building2, Phone, ArrowRight } from "lucide-react";
+import { Mail, Lock, Building2, ArrowRight, Dice1 } from "lucide-react";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { URL } from "../Constants.js";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addAgency } from "../Store/agencySlice.js";
 
-export default function AuthPage() {
+const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState("test1@gmail.com");
+  const [password, setPassword] = useState("Test1@123");
+  const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  // Parent animation for staggered children
+  const handleAuth = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const url = isLogin ? `${URL}/login` : `${URL}/signup`;
+      const payload = isLogin ? { email, password } : { email, password, name };
+
+      const res = await axios.post(url, payload, { withCredentials: true });
+
+      toast.success("Login Successfully");
+      dispatch(addAgency(res.data.user));
+      console.log("Success:", res.data.user);
+      navigate("/dashboard");
+    } catch (err) {
+      console.error("Auth Error:", err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -32,14 +63,13 @@ export default function AuthPage() {
         animate={{ opacity: 1, scale: 1 }}
         className="w-full max-w-[450px] z-10"
       >
-        {/* --- LOGO --- */}
         <motion.div
           className="text-center mb-8"
           variants={itemVariants}
           initial="hidden"
           animate="visible"
         >
-          <h1 className="text-3xl font-black tracking-tighter">
+          <h1 className="text-3xl font-black tracking-tighter text-white">
             TRACK<span className="text-orange-500">.</span>
           </h1>
           <p className="text-white/40 text-sm mt-2">
@@ -47,13 +77,8 @@ export default function AuthPage() {
           </p>
         </motion.div>
 
-        {/* --- TOGGLE SWITCH --- */}
-        <motion.div
-          variants={itemVariants}
-          initial="hidden"
-          animate="visible"
-          className="bg-white/5 border border-white/10 p-1 rounded-2xl mb-8 flex relative"
-        >
+        {/* Toggle Switch */}
+        <div className="bg-white/5 border border-white/10 p-1 rounded-2xl mb-8 flex relative">
           <motion.div
             animate={{ x: isLogin ? 0 : "100%" }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
@@ -75,11 +100,11 @@ export default function AuthPage() {
           >
             Signup
           </button>
-        </motion.div>
+        </div>
 
-        {/* --- FORM CONTAINER --- */}
+        {/* Form Container */}
         <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 p-8 rounded-[2.5rem] shadow-2xl">
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={handleAuth}>
             <AnimatePresence mode="wait">
               {isLogin ? (
                 <motion.div
@@ -96,34 +121,23 @@ export default function AuthPage() {
                     Welcome Back
                   </motion.h2>
                   <div className="space-y-5">
-                    <motion.div variants={itemVariants}>
-                      <InputField
-                        icon={<Mail size={18} />}
-                        type="email"
-                        label="Email Address"
-                        required
-                      />
-                    </motion.div>
-                    <motion.div variants={itemVariants}>
-                      <InputField
-                        icon={<Lock size={18} />}
-                        type="password"
-                        label="Password"
-                        required
-                      />
-                    </motion.div>
+                    <InputField
+                      icon={<Mail size={18} />}
+                      type="email"
+                      label="Email Address"
+                      value={email}
+                      onChange={setEmail}
+                      required
+                    />
+                    <InputField
+                      icon={<Lock size={18} />}
+                      type="password"
+                      label="Password"
+                      value={password}
+                      onChange={setPassword}
+                      required
+                    />
                   </div>
-                  <motion.div
-                    variants={itemVariants}
-                    className="text-right mt-3"
-                  >
-                    <button
-                      type="button"
-                      className="text-xs text-orange-500 hover:text-orange-400 font-medium transition-colors"
-                    >
-                      Forgot Password?
-                    </button>
-                  </motion.div>
                 </motion.div>
               ) : (
                 <motion.div
@@ -140,84 +154,73 @@ export default function AuthPage() {
                     Create Agency
                   </motion.h2>
                   <div className="space-y-5">
-                    <motion.div variants={itemVariants}>
-                      <InputField
-                        icon={<Building2 size={18} />}
-                        type="text"
-                        label="Agency Name"
-                        required
-                      />
-                    </motion.div>
-                    <motion.div variants={itemVariants}>
-                      <InputField
-                        icon={<Mail size={18} />}
-                        type="email"
-                        label="Business Email"
-                        required
-                      />
-                    </motion.div>
-
-                    <motion.div variants={itemVariants}>
-                      <InputField
-                        icon={<Lock size={18} />}
-                        type="password"
-                        label="Set Password"
-                        required
-                      />
-                    </motion.div>
+                    <InputField
+                      icon={<Building2 size={18} />}
+                      type="text"
+                      label="Agency Name"
+                      value={name}
+                      onChange={setName}
+                      required
+                    />
+                    <InputField
+                      icon={<Mail size={18} />}
+                      type="email"
+                      label="Business Email"
+                      value={email}
+                      onChange={setEmail}
+                      required
+                    />
+                    <InputField
+                      icon={<Lock size={18} />}
+                      type="password"
+                      label="Set Password"
+                      value={password}
+                      onChange={setPassword}
+                      required
+                    />
                   </div>
                 </motion.div>
               )}
             </AnimatePresence>
 
             <motion.button
-              variants={itemVariants}
-              initial="hidden"
-              animate="visible"
+              type="submit"
+              disabled={loading}
               whileHover={{
                 scale: 1.02,
                 boxShadow: "0 0 25px rgba(249,115,22,0.2)",
               }}
               whileTap={{ scale: 0.98 }}
-              className="w-full bg-white text-black font-medium py-4 rounded-2xl mt-8 flex items-center justify-center gap-2 hover:bg-orange-500 hover:text-white transition-all duration-300 shadow-lg"
+              className="w-full bg-white text-black font-bold py-4 rounded-2xl mt-8 flex items-center justify-center gap-2 hover:bg-orange-500 hover:text-white transition-all duration-300 shadow-lg disabled:opacity-50"
             >
-              {isLogin ? "Sign In" : "Register "}
-              <ArrowRight size={20} />
+              {loading ? "Processing..." : isLogin ? "Login" : "Register"}
             </motion.button>
           </form>
 
-          <motion.div
-            variants={itemVariants}
-            initial="hidden"
-            animate="visible"
-            className="mt-8 text-center"
-          >
+          <div className="mt-8 text-center">
             <p className="text-white/40 text-sm">
               {isLogin ? "New to Track?" : "Already have an account?"}{" "}
               <button
                 onClick={() => setIsLogin(!isLogin)}
-                className="text-white font-bold hover:text-orange-500 transition-colors"
+                className="text-white font-bold hover:text-orange-500"
               >
                 {isLogin ? "Create Account" : "Login Now"}
               </button>
             </p>
-          </motion.div>
+          </div>
         </div>
       </motion.div>
     </div>
   );
-}
+};
 
-// Upgrade: Floating Label Input Component
-function InputField({ icon, label, type, required }) {
+// --- Updated InputField with Props Passing ---
+function InputField({ icon, label, type, required, value, onChange }) {
   const [isFocused, setIsFocused] = useState(false);
-  const [value, setValue] = useState("");
-
-  const isActive = isFocused || value.length > 0;
+  const isActive = isFocused || (value && value.length > 0);
 
   return (
     <div className="relative">
-      {/* Icon */}
       <div
         className={`absolute left-4 top-[1.15rem] transition-colors duration-300 z-10 ${
           isFocused ? "text-orange-500" : "text-white/30"
@@ -225,32 +228,30 @@ function InputField({ icon, label, type, required }) {
       >
         {icon}
       </div>
-
-      {/* Floating Label */}
       <label
         className={`absolute left-12 transition-all duration-300 pointer-events-none ${
           isActive
-            ? "-top-2.5 left-4 text-[10px] font-bold text-orange-500 bg-[#121212] px-2 rounded-md"
+            ? "-top-2.5 left-4 text-[10px] font-bold text-orange-500 bg-[#050505] px-2 rounded-md"
             : "top-[1.15rem] text-sm text-white/20"
         }`}
       >
         {label} {required && "*"}
       </label>
-
-      {/* Input Field */}
       <input
         type={type}
         required={required}
         value={value}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => onChange(e.target.value)}
         className={`w-full bg-white/5 border transition-all duration-300 rounded-xl py-4 pl-12 pr-4 text-sm focus:outline-none ${
           isFocused
-            ? "border-orange-500/50 bg-white/[0.08] shadow-[0_0_15px_rgba(249,115,22,0.1)]"
-            : "border-white/10"
+            ? "border-orange-500/50 bg-white/[0.08] shadow-[0_0_15px_rgba(249,115,22,0.1)] text-white"
+            : "border-white/10 text-white"
         }`}
       />
     </div>
   );
 }
+
+export default Login;
