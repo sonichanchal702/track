@@ -29,6 +29,7 @@ import { getProjects } from "../controllers/getAllProjects.js";
 import { createInvoice } from "../controllers/Invoices/createInvoice.js";
 import { downloadInvoice } from "../controllers/Invoices/downloadInvoice.js";
 import { markInvoicePaid } from "../controllers/Invoices/markInvoicePaid.js";
+import { overview } from "../controllers/overview.js";
 
 const router = express.Router();
 
@@ -37,16 +38,15 @@ router.post("/login", login);
 router.post("/logout", logout);
 
 // Team routes
-    router.post("/add-new-member", userAuth, addTeamMember);
+router.post("/add-new-member", userAuth, addTeamMember);
 
-    // Option A: paginated / filtered list
-    router.get("/team", userAuth, getAllTeamMembers);
+// Option A: paginated / filtered list
+router.get("/team", userAuth, getAllTeamMembers);
 
-    // Option B: simple list (legacy / basic)
-    router.get("/team/:id", userAuth, getTeamById);
-    router.patch("/edit-team/:id", userAuth, editTeam);
-    router.delete("/team/:id", userAuth, deleteTeam);
-
+// Option B: simple list (legacy / basic)
+router.get("/team/:id", userAuth, getTeamById);
+router.patch("/edit-team/:id", userAuth, editTeam);
+router.delete("/team/:id", userAuth, deleteTeam);
 
 //project routes
 router.post("/createProject", userAuth, createProject);
@@ -76,5 +76,8 @@ router.patch("/alerts/:id/read", userAuth, readAlert);
 router.post("/create-invoice", userAuth, createInvoice);
 router.get("/invoices/:id/download", userAuth, downloadInvoice);
 router.patch("/invoices/:id/paid", userAuth, markInvoicePaid);
+
+//overview
+router.get("/overview", userAuth, overview);
 
 export default router;
