@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Lock, Building2, ArrowRight, Dice1 } from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { URL } from "../Constants.js";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addAgency } from "../Store/agencySlice.js";
 
 const Login = () => {
@@ -16,8 +16,8 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const agency = useSelector((store) => store.agency);
   const dispatch = useDispatch();
-
   const handleAuth = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -27,13 +27,16 @@ const Login = () => {
       const payload = isLogin ? { email, password } : { email, password, name };
 
       const res = await axios.post(url, payload, { withCredentials: true });
-
-      toast.success("Login Successfully");
       dispatch(addAgency(res.data.user));
-      console.log("Success:", res.data.user);
-      navigate("/dashboard");
+      toast.success(
+        isLogin ? "Welcome back!" : "Account created successfully!",
+      );
+      navigate("/dashboard", { replace: true });
     } catch (err) {
-      console.error("Auth Error:", err.message);
+      const errorMsg =
+        err.response?.data?.message || "Something went wrong. Try again!";
+      toast.error(errorMsg);
+      console.error("Auth Error details:", err.response?.data);
     } finally {
       setLoading(false);
     }
