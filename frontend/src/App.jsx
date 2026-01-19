@@ -1,23 +1,56 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { Provider, useSelector } from "react-redux";
+import { Toaster } from "react-hot-toast";
+
+import { AppStore } from "./Store/AppStore.js";
+
 import Landing from "./Components/Landing.jsx";
 import Login from "./Components/Login.jsx";
 import WhyUs from "./Components/WhyUs.jsx";
-import { Toaster } from "react-hot-toast";
-import { Provider } from "react-redux";
-import { AppStore } from "./Store/AppStore.js";
-import Dashboard from "./Components/Dashboard.jsx";
+
+// layout + pages
+import Overview from "./Components/Layout/Overview.jsx";
+import DashboardLayout from "./Components/Sidebar.jsx";
+import Projects from "./Components/Projects.jsx";
+import Clients from "./Components/Clients.jsx";
+
+/* ---------- PROTECTED ROUTE ---------- */
+const ProtectedRoute = ({ children }) => {
+  const agency = useSelector((store) => store.agency);
+  return agency ? children : <Navigate to="/login" replace />;
+};
+
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/why-us" element={<WhyUs />} />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <DashboardLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<Overview />} />
+        <Route path="projects" element={<Projects />} />
+        <Route path="clients" element={<Clients />} />
+      </Route>
+
+      {/* Page doesnt exist */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+}
 
 export default function App() {
   return (
     <Provider store={AppStore}>
-      <Toaster position="top-middle" reverseOrder={false} />
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/why-us" element={<WhyUs />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-      </Routes>
+      <Toaster position="top-center" />
+      <AppRoutes />
     </Provider>
   );
 }
