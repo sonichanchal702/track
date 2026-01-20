@@ -17,11 +17,11 @@ app.use(
   cors({
     origin: "http://localhost:5173", // frontend
     credentials: true,
-  })
+  }),
 );
 
 // routes
-app.use("/user", apiLimiter, authRoutes);
+app.use("/user", authRoutes); //apiLimiter lgana hai.
 
 const PORT = process.env.PORT || 5000;
 

@@ -27,6 +27,8 @@ export const getProjects = async (req, res) => {
     const total = await Project.countDocuments(project);
 
     const fetchedProject = await Project.find(project)
+      .populate("assignedTo", "name email")
+      .populate("clientId", "name")
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);

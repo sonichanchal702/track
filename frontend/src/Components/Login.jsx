@@ -57,7 +57,6 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-[#050505] text-white flex items-center justify-center p-6 relative overflow-hidden">
-      {/* Background Glows */}
       <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-orange-500/10 blur-[120px] rounded-full" />
       <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/10 blur-[120px] rounded-full" />
 
@@ -80,7 +79,6 @@ const Login = () => {
           </p>
         </motion.div>
 
-        {/* Toggle Switch */}
         <div className="bg-white/5 border border-white/10 p-1 rounded-2xl mb-8 flex relative">
           <motion.div
             animate={{ x: isLogin ? 0 : "100%" }}
@@ -105,7 +103,6 @@ const Login = () => {
           </button>
         </div>
 
-        {/* Form Container */}
         <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 p-8 rounded-[2.5rem] shadow-2xl">
           <form onSubmit={handleAuth}>
             <AnimatePresence mode="wait">
@@ -217,7 +214,6 @@ const Login = () => {
   );
 };
 
-// --- Updated InputField with Props Passing ---
 function InputField({ icon, label, type, required, value, onChange }) {
   const [isFocused, setIsFocused] = useState(false);
   const isActive = isFocused || (value && value.length > 0);

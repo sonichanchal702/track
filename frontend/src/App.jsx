@@ -14,6 +14,7 @@ import Overview from "./Components/Layout/Overview.jsx";
 import DashboardLayout from "./Components/Sidebar.jsx";
 import Projects from "./Components/Projects.jsx";
 import Clients from "./Components/Clients.jsx";
+import ViewAProject from "./Components/ViewAProject.jsx";
 
 /* ---------- PROTECTED ROUTE ---------- */
 const ProtectedRoute = ({ children }) => {
@@ -37,6 +38,7 @@ function AppRoutes() {
       >
         <Route index element={<Overview />} />
         <Route path="projects" element={<Projects />} />
+        <Route path="viewProject/:id" element={<ViewAProject />} />
         <Route path="clients" element={<Clients />} />
       </Route>
 

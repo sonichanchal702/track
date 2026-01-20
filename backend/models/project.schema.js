@@ -75,7 +75,7 @@ const projectSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 projectSchema.index({ createdBy: 1 });
 projectSchema.index({ projectStatus: 1 });
