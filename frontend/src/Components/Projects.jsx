@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ShimmerProjects from "./ProjectsShimmer.jsx";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   motion,
   AnimatePresence,
@@ -19,9 +19,10 @@ import {
   Briefcase,
   ArrowRight,
   Sparkles,
+  Plus,
+  CalendarClock,
 } from "lucide-react";
 import { URL } from "../Constants.js";
-import ViewAProject from "./ViewAProject.jsx";
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -49,10 +50,17 @@ const Projects = () => {
     fetchProjects(pagination.page);
   }, [pagination.page]);
 
+  const filterDeadline = () => {
+    const sorted = [...projects].sort((a, b) => {
+      return new Date(a.deadline) - new Date(b.deadline);
+    });
+    setProjects(sorted);
+  };
+
   const filteredProjects = projects.filter((proj) => {
     const matchesSearch =
       proj.projectName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      proj.clientId.name.toLowerCase().includes(searchQuery.toLowerCase());
+      proj.clientId?.name.toLowerCase().includes(searchQuery.toLowerCase());  
     const matchesStatus =
       statusFilter === "all" || proj.projectStatus === statusFilter;
     return matchesSearch && matchesStatus;
@@ -61,26 +69,59 @@ const Projects = () => {
   return (
     <div className="p-10 space-y-10 font-sans selection:bg-orange-500/30">
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-        <div className="flex items-center gap-2">
+        {/* LEFT: TITLE */}
+        <div className="flex items-center gap-2 shrink-0">
           <Sparkles size={22} className="text-orange-500" />
           <h1 className="text-2xl lg:text-3xl font-semibold text-white tracking-tight">
             Projects<span className="text-orange-500">.</span>
           </h1>
         </div>
 
-        <div className="flex flex-wrap items-center gap-4">
-          <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/[0.03] border border-orange-500/60 focus-within:border-orange-500/50 transition-all">
-            <Search size={16} className="text-orange-500" />
+        {/* RIGHT: CONTROLS */}
+        <div className="flex flex-wrap items-center gap-4 justify-end">
+          {/* SEARCH */}
+          <div
+            className="flex items-center min-h-[44px] gap-3 px-4 rounded-2xl
+      bg-white/[0.03] border border-orange-500/60
+      focus-within:border-orange-500/50
+      transition-all w-[260px]"
+          >
+            <Search size={16} className="text-orange-500 shrink-0" />
             <input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search projects or clients"
-              className="bg-transparent outline-none text-sm text-white/80 w-52 font-normal placeholder:text-white/30"
+              className="bg-transparent outline-none text-sm text-white/80 w-full placeholder:text-white/30"
             />
           </div>
 
-          <div className="flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white/[0.03] border border-orange-500/60">
-            <Filter size={16} className="text-orange-500/80" />
+          {/* SORT */}
+          <div className="relative group">
+            <div
+              onClick={filterDeadline}
+              className="flex items-center justify-center min-h-[44px] px-4
+        rounded-2xl bg-white/[0.03] border border-orange-500/60 cursor-pointer"
+            >
+              <CalendarClock size={18} className="text-orange-500/80" />
+            </div>
+
+            <div
+              className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2
+        px-3 py-1.5 rounded-lg bg-black text-white text-xs font-medium
+        opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100
+        transition-all duration-200 ease-out
+        pointer-events-none whitespace-nowrap"
+            >
+              Sort by deadline
+            </div>
+          </div>
+
+          {/* FILTER */}
+          <div
+            className="flex items-center min-h-[44px] gap-3 px-4 rounded-2xl
+      bg-white/[0.03] border border-orange-500/60"
+          >
+            <Filter size={16} className="text-orange-500/80 shrink-0" />
             <select
               onChange={(e) => setStatusFilter(e.target.value)}
               className="bg-transparent outline-none text-sm text-white/70 font-medium cursor-pointer"
@@ -96,6 +137,18 @@ const Projects = () => {
               </option>
             </select>
           </div>
+
+          {/* ADD PROJECT */}
+          <Link to="/dashboard/create-project">
+            <button
+              className="flex items-center gap-1 min-h-[44px] px-5
+        rounded-2xl bg-orange-600 text-black font-medium
+        transition-transform duration-200 ease-out
+        hover:bg-orange-500 hover:scale-105 active:scale-95"
+            >
+              Add Project <Plus />
+            </button>
+          </Link>
         </div>
       </div>
 
@@ -176,7 +229,6 @@ const ProjectCard = ({ proj, index }) => {
         style={{ background }}
       />
 
-      {/* LEFT */}
       <div className="flex items-center gap-6 flex-1 min-w-0 z-10">
         <div
           className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110 duration-500 ${
@@ -194,7 +246,7 @@ const ProjectCard = ({ proj, index }) => {
           </h3>
           <div className="flex items-center gap-2 mt-1 text-xs font-normal text-white/50">
             <User size={12} className="text-orange-500" />
-            {proj.clientId.name}
+            {proj.clientId?.name}
             <span className="text-white/20">|</span>
             <span
               className={
