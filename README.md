@@ -3,6 +3,9 @@
 > **A role-based, production-style web application designed to manage freelance and agency workflows with real-time visibility, workload control, and trust mechanisms.**
 
 ---
+<img width="1339" height="630" alt="image" src="https://github.com/user-attachments/assets/007df670-5dc2-44e8-87c7-05d5eed86c86" />
+
+---
 
 ## ⭐ Key Highlights
 
