@@ -16,14 +16,12 @@ import {
 } from "lucide-react";
 import { useSelector } from "react-redux";
 
-/* ------------------ LAYOUT ------------------ */
-
 const DashboardLayout = () => {
   const [open, setOpen] = useState(true);
   const agency = useSelector((s) => s.agency);
 
   return (
-    <div className="flex min-h-screen bg-[#020202] text-white overflow-hidden font-sans">
+    <div className="flex min-h-screen  bg-[#020202] text-white overflow-hidden font-sans">
       {/* SIDEBAR */}
       <motion.aside
         animate={{ width: open ? 260 : 76 }}
