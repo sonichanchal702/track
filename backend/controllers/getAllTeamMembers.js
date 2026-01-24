@@ -7,24 +7,14 @@ export const getAllTeamMembers = async (req, res) => {
     const agencyId = req.user._id;
 
     const { search, status } = req.query;
-
     const skip = (page - 1) * limit;
 
-    const filter = {
-      createdBy: agencyId,
-    };
+    const filter = { agencyId };
 
-    // filter by team status: free | busy | overloaded
-    if (status) {
-      filter.status = status;
-    }
+    if (status) filter.status = status;
 
-    // search by name or role (extendable)
     if (search) {
-      filter.name = {
-        $regex: search,
-        $options: "i",
-      };
+      filter.name = { $regex: search, $options: "i" };
     }
 
     const total = await Team.countDocuments(filter);

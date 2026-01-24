@@ -39,11 +39,7 @@ router.post("/logout", logout);
 
 // Team routes
 router.post("/add-new-member", userAuth, addTeamMember);
-
-// Option A: paginated / filtered list
 router.get("/team", userAuth, getAllTeamMembers);
-
-// Option B: simple list (legacy / basic)
 router.get("/team/:id", userAuth, getTeamById);
 router.patch("/edit-team/:id", userAuth, editTeam);
 router.delete("/team/:id", userAuth, deleteTeam);

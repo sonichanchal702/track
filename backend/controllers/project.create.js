@@ -29,22 +29,21 @@ export const createProject = async (req, res) => {
       return res.status(400).send("Enter required fielsds");
     }
 
-    //   find/create the client.
     let client = await Client.findOne({
       userId: agencyId,
       phone,
     });
 
-    //if no client found to create new Client
     if (!client) {
-      let newClient = new Client({
+      client = new Client({
         userId: agencyId,
         name: clientName,
         phone,
         email,
       });
-      await newClient.save(); //saving the client in db
+      await client.save();
     }
+
     //create neww proejct;
     const newProject = new Project({
       projectName,
