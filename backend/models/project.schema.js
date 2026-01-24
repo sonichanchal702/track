@@ -36,6 +36,7 @@ const projectSchema = new mongoose.Schema(
     description: {
       type: String,
       trim: true,
+      maxLength: 50,
     },
 
     deadline: {
@@ -69,7 +70,7 @@ const projectSchema = new mongoose.Schema(
 
     paymentStatus: {
       type: String,
-      enum: ["pending", "half_paid", "paid"],
+      enum: ["pending", "partial", "completed"],
       default: "pending",
     },
   },

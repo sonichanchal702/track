@@ -16,6 +16,7 @@ import Projects from "./Components/Projects.jsx";
 import Clients from "./Components/Clients.jsx";
 import ViewAProject from "./Components/ViewAProject.jsx";
 import AddProject from "./Components/CreateProjects.jsx";
+import ViewTeam from "./Components/ViewTeam.jsx";
 
 /* ---------- PROTECTED ROUTE ---------- */
 const ProtectedRoute = ({ children }) => {
@@ -42,9 +43,9 @@ function AppRoutes() {
         <Route path="viewProject/:id" element={<ViewAProject />} />
         <Route path="create-project" element={<AddProject />} />
         <Route path="clients" element={<Clients />} />
+        <Route path="team" element={<ViewTeam />} />
       </Route>
 
-      {/* Page doesnt exist */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
