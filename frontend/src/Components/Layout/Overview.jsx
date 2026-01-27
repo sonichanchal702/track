@@ -133,11 +133,11 @@ const StatCard = ({ title, value, change, icon, neutral, color }) => {
     >
       {/* GLOW */}
       <motion.div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className="absolute inset-0 opacity-100 transition-opacity duration-500"
         style={{ background }}
       />
       <motion.div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className="absolute inset-0 opacity-100 transition-opacity duration-500"
         style={{ background: borderOverlay }}
       />
 

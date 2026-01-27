@@ -18,7 +18,6 @@ import ViewAProject from "./Components/ViewAProject.jsx";
 import AddProject from "./Components/CreateProjects.jsx";
 import ViewTeam from "./Components/ViewTeam.jsx";
 
-/* ---------- PROTECTED ROUTE ---------- */
 const ProtectedRoute = ({ children }) => {
   const agency = useSelector((store) => store.agency);
   return agency ? children : <Navigate to="/login" replace />;

@@ -17,7 +17,7 @@ const clientSchema = new mongoose.Schema(
 
     email: String,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 clientSchema.index({ userId: 1, phone: 1 }, { unique: true });

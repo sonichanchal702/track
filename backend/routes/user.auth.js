@@ -30,6 +30,7 @@ import { createInvoice } from "../controllers/Invoices/createInvoice.js";
 import { downloadInvoice } from "../controllers/Invoices/downloadInvoice.js";
 import { markInvoicePaid } from "../controllers/Invoices/markInvoicePaid.js";
 import { overview } from "../controllers/overview.js";
+import { getClients } from "../controllers/getClients.js";
 
 const router = express.Router();
 
@@ -51,6 +52,8 @@ router.patch("/projects/:id/assign-team", userAuth, assignMember);
 router.get("/projects/:id", userAuth, getProjectById);
 router.patch("/projects/:id/complete", userAuth, completeProject);
 router.delete("/projects/:id", userAuth, deleteProject);
+
+router.get("/clients", userAuth, getClients);
 
 //project Updates/feedbacks/timelines
 router.post("/projects/:id/generate-links", userAuth, generateLinks); //token generate hote hai
