@@ -8,17 +8,12 @@ import {
   useMotionTemplate,
 } from "framer-motion";
 import {
-  Briefcase,
   Phone,
-  IndianRupee,
   ChevronLeft,
   ChevronRight,
   Sparkles,
-  Users,
-  BadgeCheck,
-  Zap,
   UserRoundPlus,
-  User,
+  Zap,
   Edit3,
 } from "lucide-react";
 
@@ -67,15 +62,12 @@ function ViewTeam() {
 
   return (
     <div className="relative min-h-screen px-6 lg:px-10 py-8 flex flex-col gap-8 overflow-hidden text-[#e5e5e5] font-sans">
-      <div className="space-y-1 flex flex-row w-full justify-between">
-        <h1 className="text-4xl font-black text-white tracking-tighter uppercase flex flex-row italic leading-none">
-          <Sparkles
-            size={24}
-            className="text-orange-500 position-relative top-[2px]"
-          />
+      <div className="space-y-1 flex flex-row w-full justify-between items-center">
+        <h1 className="text-4xl font-black text-white tracking-tighter uppercase flex flex-row italic leading-none items-center">
+          <Sparkles size={28} className="text-orange-500" />
           Talent Pool<span className="text-orange-500">.</span>
         </h1>
-        <button className="flex items-center gap-2 px-5 py-3 bg-orange-500 hover:bg-orange-600 text-black text-sm font-semibold rounded-xl shadow-lg transition-all duration-200 active:scale-95">
+        <button className="flex items-center gap-2 px-5 py-3 bg-orange-500 hover:bg-orange-600 text-black text-sm font-bold rounded-xl shadow-lg transition-all duration-200 active:scale-95 uppercase tracking-tight">
           <UserRoundPlus size={18} />
           Add Team Member
         </button>
@@ -91,12 +83,13 @@ function ViewTeam() {
         </div>
       </div>
 
+      {/* Pagination Controls */}
       <div className="relative z-10 flex items-center justify-center gap-8 py-4">
         <motion.button
           whileTap={{ scale: 0.95 }}
           disabled={currentPage === 1}
           onClick={() => setCurrentPage((p) => p - 1)}
-          className="p-3 bg-white/5 border border-white/10 rounded-2xl text-white/40 hover:text-orange-500 disabled:opacity-20"
+          className="p-3 bg-white/5 border border-white/10 rounded-2xl text-white/40 hover:text-orange-500 disabled:opacity-20 transition-colors"
         >
           <ChevronLeft size={20} />
         </motion.button>
@@ -109,7 +102,7 @@ function ViewTeam() {
           whileTap={{ scale: 0.95 }}
           disabled={currentPage === totalPages}
           onClick={() => setCurrentPage((p) => p + 1)}
-          className="p-3 bg-white/5 border border-white/10 rounded-2xl text-white/40 hover:text-orange-500 disabled:opacity-20"
+          className="p-3 bg-white/5 border border-white/10 rounded-2xl text-white/40 hover:text-orange-500 disabled:opacity-20 transition-colors"
         >
           <ChevronRight size={20} />
         </motion.button>
@@ -118,9 +111,13 @@ function ViewTeam() {
   );
 }
 
+/* ===== TEAM MEMBER CARD WITH GLOW ===== */
 const TeamMemberCard = ({ member, index }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+
+  // Stats Card ki tarah color variable (Orange: 249, 115, 22)
+  const color = "249, 115, 22";
 
   function handleMouseMove({ currentTarget, clientX, clientY }) {
     let { left, top } = currentTarget.getBoundingClientRect();
@@ -128,83 +125,119 @@ const TeamMemberCard = ({ member, index }) => {
     mouseY.set(clientY - top);
   }
 
-  const background = useMotionTemplate`radial-gradient(350px circle at ${mouseX}px ${mouseY}px, rgba(249, 115, 22, 0.12), transparent 80%)`;
+  // Radial Gradients like Overview component
+  const background = useMotionTemplate`
+    radial-gradient(
+      350px circle at ${mouseX}px ${mouseY}px,
+      rgba(${color}, 0.12),
+      transparent 80%
+    )
+  `;
+
+  const borderOverlay = useMotionTemplate`
+    radial-gradient(
+      200px circle at ${mouseX}px ${mouseY}px,
+      rgba(${color}, 0.4),
+      transparent 80%
+    )
+  `;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       onMouseMove={handleMouseMove}
-      whileHover={{ y: -5 }}
-      className="group relative bg-[#050505]/60 backdrop-blur-2xl border border-white/5 rounded-[2rem] p-6 shadow-2xl flex flex-col gap-5"
+      className="group relative rounded-[2rem] p-[1px] overflow-hidden transition-all duration-500"
+      style={{ backgroundColor: "rgba(255,255,255,0.05)" }}
     >
+      {/* GLOW BACKGROUND */}
       <motion.div
-        className="absolute inset-0 z-0 pointer-events-none opacity-0 group-hover:opacity-100"
+        className="absolute inset-0 pacity-100 transition-opacity duration-500 pointer-events-none"
         style={{ background }}
       />
 
-      <div className="relative z-10 flex items-start justify-between">
-        <div className="flex items-center gap-4 min-w-0">
-          <div className="w-14 h-14 rounded-xl bg-gradient-to-tr from-orange-600 to-orange-400 flex items-center justify-center text-black text-xl font-semibold shadow-lg">
-            {member.name?.charAt(0)}
-          </div>
-          <div className="min-w-0">
-            <h3 className="text-lg font-semibold text-white truncate">
-              {member.name}
-            </h3>
+      {/* BORDER GLOW OVERLAY */}
+      <motion.div
+        className="absolute inset-0 opacity-100 transition-opacity duration-500 pointer-events-none"
+        style={{ background: borderOverlay }}
+      />
 
-            <div className="mt-2 flex items-center">
-              <div
-                className={`px-3 py-1 rounded-full border flex items-center gap-2 text-xs font-medium ${
-                  member.status === "busy"
-                    ? "bg-red-500/10 border-red-500/20 text-red-400"
-                    : "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
-                }`}
-              >
+      {/* CARD CONTENT */}
+      <div className="relative z-10 h-full rounded-[2rem] bg-[#0a0a0a]/90 backdrop-blur-3xl p-6 border border-white/[0.05] flex flex-col gap-5">
+        <div className="flex items-start justify-between">
+          <div className="flex items-center gap-4 min-w-0">
+            {/* Avatar */}
+            <div className="w-14 h-14 rounded-xl bg-gradient-to-tr from-orange-600 to-orange-400 flex items-center justify-center text-black text-xl font-bold shadow-lg shadow-orange-500/20">
+              {member.name?.charAt(0)}
+            </div>
+
+            <div className="min-w-0">
+              <h3 className="text-lg font-bold text-white truncate uppercase tracking-tight">
+                {member.name}
+              </h3>
+
+              <div className="mt-1 flex items-center">
                 <div
-                  className={`w-2 h-2 rounded-full ${
-                    member.status === "busy" ? "bg-red-500" : "bg-emerald-500"
+                  className={`px-3 py-0.5 rounded-full border flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider ${
+                    member.status === "busy"
+                      ? "bg-red-500/10 border-yellow-500/20 text-yellow-400"
+                      : "bg-emerald-500/10 border-emerald-500/20 text-emerald-400"
                   }`}
-                />
-                {member.status || "Active"}
+                >
+                  <div
+                    className={`w-1.5 h-1.5 rounded-full animate-pulse ${
+                      member.status === "busy"
+                        ? "bg-yellow-500"
+                        : "bg-emerald-500"
+                    }`}
+                  />
+                  {member.status || "Active"}
+                </div>
               </div>
             </div>
           </div>
+
+          <button className="p-2.5 bg-white/5 hover:bg-orange-500 hover:text-black text-white/40 rounded-xl transition-all duration-300">
+            <Edit3 size={16} />
+          </button>
         </div>
 
-        <button className="p-2 bg-white/5 hover:bg-orange-500 hover:text-black text-white/40 rounded-xl transition">
-          <Edit3 size={16} />
-        </button>
-      </div>
-
-      <div className="relative z-10 space-y-2">
-        <p className="text-xs font-medium text-white/30 flex items-center gap-2">
-          <Zap size={12} className="text-orange-500/40" /> Skills
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {member.skills?.map((skill, i) => (
-            <span
-              key={i}
-              className={`px-3 py-1 border rounded-lg text-xs font-medium ${tagColors[i % tagColors.length]}`}
-            >
-              {skill}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <div className="relative z-10 mt-auto pt-4 border-t border-white/[0.03] flex items-center justify-between">
-        <div>
-          <p className="text-xs text-white/30">Contact</p>
-          <div className="flex items-center gap-2 text-sm font-medium text-white/80">
-            <Phone size={12} className="text-orange-500/60" /> {member.contact}
+        {/* Skills Section */}
+        <div className="space-y-2">
+          <p className="text-[10px]  uppercase tracking-[0.2em] text-white/30 flex items-center gap-2">
+            <Zap size={12} className="text-orange-500" /> Stack & Expertise
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {member.skills?.map((skill, i) => (
+              <span
+                key={i}
+                className={`px-3 py-1 border rounded-lg text-[10px] font-bold uppercase transition-all duration-300 ${tagColors[i % tagColors.length]}`}
+              >
+                {skill}
+              </span>
+            ))}
           </div>
         </div>
 
-        <div className="text-right">
-          <p className="text-xs text-white/30">Payout</p>
-          <div className="text-lg font-semibold text-white">
-            ₹{member.payoutPerProject}
+        {/* Bottom Details */}
+        <div className="mt-auto pt-4 border-t border-white/[0.05] flex items-center justify-between">
+          <div className="space-y-0.5">
+            <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">
+              Contact
+            </p>
+            <div className="flex items-center gap-2 text-xs font-semibold text-white/80">
+              <Phone size={12} className="text-orange-500/60" />{" "}
+              {member.contact}
+            </div>
+          </div>
+
+          <div className="text-right space-y-0.5">
+            <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">
+              Rate
+            </p>
+            <div className="text-xl font-black text-white ">
+              ₹{member.payoutPerProject}
+            </div>
           </div>
         </div>
       </div>

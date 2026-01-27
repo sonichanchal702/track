@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard,
@@ -11,17 +11,31 @@ import {
   Banknote,
   File,
   Megaphone,
-  Menu,
   Sparkles,
+  LogOut,
 } from "lucide-react";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { URL } from "../Constants.js";
+import toast from "react-hot-toast";
+import { removeAgency } from "../Store/agencySlice";
 
 const DashboardLayout = () => {
   const [open, setOpen] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
   const agency = useSelector((s) => s.agency);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    setMenuOpen(false);
+    await axios.post(URL + "/logout");
+    toast.success("Logout Successfully");
+    navigate("/");
+    removeAgency();
+  };
 
   return (
-    <div className="flex min-h-screen  bg-[#020202] text-white overflow-hidden font-sans">
+    <div className="flex min-h-screen bg-[#020202] text-white overflow-hidden font-sans">
       {/* SIDEBAR */}
       <motion.aside
         animate={{ width: open ? 260 : 76 }}
@@ -119,10 +133,10 @@ const DashboardLayout = () => {
           </SidebarSection>
         </nav>
 
-        {/* FOOTER */}
-        <div className="p-3">
-          <div
-            className={`flex items-center rounded-xl p-3 bg-orange-500/10 transition-all
+        <div className="p-3 relative">
+          <button
+            onClick={() => setMenuOpen((p) => !p)}
+            className={`w-full flex items-center rounded-xl p-3 bg-orange-500/10 transition-all
             ${open ? "gap-3 justify-start" : "justify-center"}`}
           >
             <div className="w-9 h-9 rounded-lg bg-orange-500 text-black flex items-center justify-center font-semibold">
@@ -142,7 +156,37 @@ const DashboardLayout = () => {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
+          </button>
+
+          {/* POPOVER */}
+          <AnimatePresence>
+            {menuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className={`absolute bottom-20 ${
+                  open ? "left-3 right-3" : "left-16"
+                } bg-black/90 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl z-50`}
+              >
+                <PopoverItem
+                  label="Give Feedback"
+                  icon={<Megaphone size={16} />}
+                  onClick={() => setMenuOpen(false)}
+                />
+
+                <PopoverDivider />
+
+                <PopoverItem
+                  label="Logout"
+                  onClick={handleLogout}
+                  icon={<LogOut size={16} />}
+                  danger
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </motion.aside>
 
@@ -154,7 +198,7 @@ const DashboardLayout = () => {
   );
 };
 
-/* ------------------ SIDEBAR ITEM ------------------ */
+/* ---------------- SIDEBAR ITEM ---------------- */
 
 const SidebarItem = ({ to, icon, label, open, end }) => (
   <NavLink to={to} end={end} className="block relative">
@@ -167,7 +211,6 @@ const SidebarItem = ({ to, icon, label, open, end }) => (
         ${open ? "px-3 py-2.5 gap-3" : "p-3 justify-center"}
         ${isActive ? "text-black" : "text-white/60"}`}
       >
-        {/* MIRROR HOVER LAYER */}
         <motion.div
           variants={{
             rest: { opacity: 0, x: "-200%" },
@@ -177,7 +220,6 @@ const SidebarItem = ({ to, icon, label, open, end }) => (
           className="absolute inset-0 bg-gradient-to-r from-white/5 via-white/20 to-white/5 backdrop-blur-xl"
         />
 
-        {/* ACTIVE BG */}
         {isActive && (
           <motion.div
             layoutId="active-bg"
@@ -186,10 +228,8 @@ const SidebarItem = ({ to, icon, label, open, end }) => (
           />
         )}
 
-        {/* ICON */}
         <span className="relative z-10">{icon}</span>
 
-        {/* TEXT */}
         <AnimatePresence>
           {open && (
             <motion.span
@@ -208,7 +248,7 @@ const SidebarItem = ({ to, icon, label, open, end }) => (
   </NavLink>
 );
 
-/* ------------------ HELPERS ------------------ */
+/* ---------------- HELPERS ---------------- */
 
 const SidebarSection = ({ title, open, children }) => (
   <div>
@@ -229,5 +269,22 @@ const SidebarSection = ({ title, open, children }) => (
 );
 
 const SidebarDivider = () => <div className="h-px bg-white/10 mx-2 my-4" />;
+
+const PopoverItem = ({ label, icon, onClick, danger }) => (
+  <button
+    onClick={onClick}
+    className={`w-full flex items-center gap-3 px-4 py-3 text-sm transition-all
+    ${
+      danger
+        ? "text-red-400 hover:bg-red-500/20 hover:text-red-300"
+        : "text-white/70 hover:bg-white/5 hover:text-white"
+    }`}
+  >
+    {icon}
+    <span className="font-medium">{label}</span>
+  </button>
+);
+
+const PopoverDivider = () => <div className="h-px bg-white/10 mx-3" />;
 
 export default DashboardLayout;
