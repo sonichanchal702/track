@@ -21,6 +21,7 @@ import {
   Sparkles,
   Plus,
   CalendarClock,
+  SquarePen,
 } from "lucide-react";
 import { URL } from "../Constants.js";
 
@@ -60,7 +61,7 @@ const Projects = () => {
   const filteredProjects = projects.filter((proj) => {
     const matchesSearch =
       proj.projectName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      proj.clientId?.name.toLowerCase().includes(searchQuery.toLowerCase());  
+      proj.clientId?.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesStatus =
       statusFilter === "all" || proj.projectStatus === statusFilter;
     return matchesSearch && matchesStatus;
@@ -71,8 +72,10 @@ const Projects = () => {
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         {/* LEFT: TITLE */}
         <div className="flex items-center gap-2 shrink-0">
-          <Sparkles size={22} className="text-orange-500" />
-          <h1 className="text-2xl lg:text-3xl font-semibold text-white tracking-tight">
+          <div className="p-2 rounded-2xl bg-orange-500/10 border border-orange-500/20 shadow-lg shadow-orange-500/10">
+            <Sparkles size={24} className="text-orange-500" />
+          </div>
+          <h1 className="text-4xl font-black text-white tracking-tighter uppercase flex flex-row italic leading-none items-center">
             Projects<span className="text-orange-500">.</span>
           </h1>
         </div>
@@ -174,7 +177,7 @@ const Projects = () => {
         </button>
 
         <div className="flex flex-col items-center">
-          <span className="text-[10px] font-medium text-white/30 uppercase tracking-widest mb-1">
+          <span className="text-[12px] font-medium text-white/30 uppercase tracking-widest mb-1">
             Page
           </span>
           <span className="text-sm font-medium text-white">
@@ -234,10 +237,12 @@ const ProjectCard = ({ proj, index }) => {
           className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110 duration-500 ${
             proj.projectStatus === "active"
               ? "bg-orange-500 text-black shadow-orange-500/20"
-              : "bg-white/5 text-white/40"
+              : "bg-orange-500 text-black"
           }`}
         >
-          <Briefcase size={22} />
+          <div>
+            <Briefcase size={22} />
+          </div>
         </div>
 
         <div className="truncate">
@@ -283,8 +288,15 @@ const ProjectCard = ({ proj, index }) => {
 
       <motion.button
         whileHover={{ x: 5, backgroundColor: "#f97316", color: "#000" }}
+        onClick={() => navigate(`/dashboard/editProject/${proj._id}`)}
+        className="p-4 bg-blue-600/10 rounded-2xl border border-white/10 text-blue-400 transition-all z-10"
+      >
+        <SquarePen size={20} />
+      </motion.button>
+      <motion.button
+        whileHover={{ x: 5, backgroundColor: "#f97316", color: "#000" }}
         onClick={() => navigate(`/dashboard/viewProject/${proj._id}`)}
-        className="p-4 bg-white/5 rounded-2xl border border-white/10 text-white/40 transition-all z-10"
+        className="p-4 bg-orange-500/10 rounded-2xl border border-white/10 text-orange-400 transition-all z-10"
       >
         <ArrowRight size={20} />
       </motion.button>
@@ -294,7 +306,7 @@ const ProjectCard = ({ proj, index }) => {
 
 const InfoItem = ({ label, children }) => (
   <div className="flex flex-col gap-0.5 min-w-fit">
-    <p className="text-[10px] font-semibold text-white/30 uppercase tracking-wide">
+    <p className="text-[12px] font-semibold text-white/30 uppercase tracking-wide">
       {label}
     </p>
     <div className="flex items-center gap-2 text-sm">{children}</div>

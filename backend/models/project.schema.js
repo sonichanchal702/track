@@ -36,7 +36,7 @@ const projectSchema = new mongoose.Schema(
     description: {
       type: String,
       trim: true,
-      maxLength: 50,
+      maxLength: 100,
     },
 
     deadline: {
