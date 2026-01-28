@@ -17,6 +17,8 @@ import Clients from "./Components/Clients.jsx";
 import ViewAProject from "./Components/ViewAProject.jsx";
 import AddProject from "./Components/CreateProjects.jsx";
 import ViewTeam from "./Components/ViewTeam.jsx";
+import ViewAClient from "./Components/ViewAClient.jsx";
+import EditProject from "./Components/EditProject.jsx";
 
 const ProtectedRoute = ({ children }) => {
   const agency = useSelector((store) => store.agency);
@@ -40,8 +42,10 @@ function AppRoutes() {
         <Route index element={<Overview />} />
         <Route path="projects" element={<Projects />} />
         <Route path="viewProject/:id" element={<ViewAProject />} />
+        <Route path="editProject/:id" element={<EditProject />} />
         <Route path="create-project" element={<AddProject />} />
         <Route path="clients" element={<Clients />} />
+        <Route path="client/:clientId" element={<ViewAClient />} />
         <Route path="team" element={<ViewTeam />} />
       </Route>
 

@@ -31,6 +31,8 @@ import { downloadInvoice } from "../controllers/Invoices/downloadInvoice.js";
 import { markInvoicePaid } from "../controllers/Invoices/markInvoicePaid.js";
 import { overview } from "../controllers/overview.js";
 import { getClients } from "../controllers/getClients.js";
+import { viewAClient } from "../controllers/viewAClient.js";
+import { editProject } from "../controllers/EditAProject.js";
 
 const router = express.Router();
 
@@ -43,7 +45,7 @@ router.post("/add-new-member", userAuth, addTeamMember);
 router.get("/team", userAuth, getAllTeamMembers);
 router.get("/team/:id", userAuth, getTeamById);
 router.patch("/edit-team/:id", userAuth, editTeam);
-router.delete("/team/:id", userAuth, deleteTeam);
+router.delete("/delete-team/:id", userAuth, deleteTeam);
 
 //project routes
 router.post("/createProject", userAuth, createProject);
@@ -52,8 +54,10 @@ router.patch("/projects/:id/assign-team", userAuth, assignMember);
 router.get("/projects/:id", userAuth, getProjectById);
 router.patch("/projects/:id/complete", userAuth, completeProject);
 router.delete("/projects/:id", userAuth, deleteProject);
+router.patch("/edit/project/:id", userAuth, editProject);
 
 router.get("/clients", userAuth, getClients);
+router.get("/client/:id", userAuth, viewAClient);
 
 //project Updates/feedbacks/timelines
 router.post("/projects/:id/generate-links", userAuth, generateLinks); //token generate hote hai

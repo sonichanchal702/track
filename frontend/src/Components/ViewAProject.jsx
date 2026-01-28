@@ -133,7 +133,7 @@ const ViewProject = () => {
           whileHover={{ x: -5 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate(-1)}
-          className="flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-2xl text-sm font-black uppercase tracking-widest text-white/60 hover:text-orange-500 transition-all backdrop-blur-3xl"
+          className="flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-2xl text-sm font-medium uppercase tracking-widest text-white/60 hover:text-orange-500 transition-all backdrop-blur-3xl"
         >
           <ArrowLeft size={18} /> Back
         </motion.button>
@@ -142,7 +142,7 @@ const ViewProject = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handleCreateLinks}
-          className="flex items-center gap-2 px-6 py-2.5 bg-orange-500 text-black font-black text-xs uppercase tracking-[0.2em] rounded-2xl shadow-[0_10px_30px_rgba(249,115,22,0.3)]"
+          className="flex items-center gap-2 px-6 py-2.5 bg-orange-500 text-black font-medium text-xs uppercase tracking-[0.2em] rounded-2xl shadow-[0_12px_30px_rgba(249,115,22,0.3)]"
         >
           <LinkIcon size={16} /> Create Links
         </motion.button>
@@ -161,11 +161,11 @@ const ViewProject = () => {
               <Briefcase size={28} />
             </div>
             <div className="min-w-0">
-              <h1 className="text-3xl lg:text-5xl font-black text-white tracking-tighter leading-tight truncate italic uppercase">
+              <h1 className="text-4xl font-black text-white tracking-tighter uppercase flex flex-row italic leading-none items-center">
                 {project?.projectName}
                 <span className="text-orange-500">.</span>
               </h1>
-              <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/30 mt-2">
+              <div className="flex items-center gap-3 text-[12px] font-medium uppercase tracking-[0.3em] text-white/30 mt-2">
                 <span className="text-orange-400">
                   ID · {project?._id.slice(-8)}
                 </span>
@@ -211,11 +211,11 @@ const ViewProject = () => {
               size={140}
               className="absolute top-4 right-4 opacity-[0.02]"
             />
-            <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-white/30 mb-4 border-l-2 border-orange-500 pl-4 shrink-0">
-              Project Intel
+            <h3 className="text-[12px] font-medium  uppercase text-white/30 mb-4 border-l-2 border-orange-500 pl-4 shrink-0">
+              Project Description
             </h3>
             <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
-              <p className="text-xl font-medium text-white/80 leading-relaxed italic italic font-sans">
+              <p className="text-xl font-medium text-white/80 leading-relaxed  font-sans">
                 "{project?.description}"
               </p>
             </div>
@@ -223,7 +223,7 @@ const ViewProject = () => {
               {project?.deliverables.map((item, i) => (
                 <span
                   key={i}
-                  className="px-4 py-1.5 bg-orange-500/10 border border-orange-500/20 rounded-xl text-[10px] font-black uppercase tracking-widest text-orange-400"
+                  className="px-4 py-1.5 bg-orange-500/10 border border-orange-500/20 rounded-xl text-[12px] font-medium uppercase tracking-widest text-orange-400"
                 >
                   {item}
                 </span>
@@ -234,26 +234,18 @@ const ViewProject = () => {
 
         {/* RIGHT COLUMN */}
         <div className="flex flex-col gap-6 min-h-0">
-          <GlassInfoCard title="Primary Client" className="flex-1">
-            <ProfileHeader
-              name={project?.clientId?.name}
-              subtitle="Authorized Link"
-            />
+          <GlassInfoCard title="Client" className="flex-1  font-medium">
+            <ProfileHeader name={project?.clientId?.name} />
             <div className="space-y-3 pt-6 overflow-y-auto">
               <ContactItem
                 icon={<Phone size={12} />}
-                label="Signal"
+                label="Phone"
                 value={project?.clientId?.phone}
               />
               <ContactItem
                 icon={<Globe size={12} />}
-                label="Access"
+                label="Email"
                 value={project?.clientId?.email}
-              />
-              <ContactItem
-                icon={<Hash size={12} />}
-                label="ID"
-                value={project?.clientId?._id.slice(-12)}
               />
             </div>
           </GlassInfoCard>
@@ -272,13 +264,8 @@ const ViewProject = () => {
                 <div className="space-y-3 pt-6 overflow-y-auto">
                   <ContactItem
                     icon={<Phone size={12} />}
-                    label="Signal"
+                    label="Phone"
                     value={project?.assignedTo?.contact}
-                  />
-                  <ContactItem
-                    icon={<BadgeCheck size={12} />}
-                    label="Skills"
-                    value={project?.assignedTo?.skills?.join(", ")}
                   />
                 </div>
               </>
@@ -290,7 +277,7 @@ const ViewProject = () => {
                 <div className="p-4 rounded-2xl bg-white/5 group-hover:bg-orange-500 group-hover:text-black transition-all shadow-xl">
                   <UserPlus size={24} />
                 </div>
-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20 group-hover:text-white transition-colors">
+                <p className="text-[12px] font-medium uppercase tracking-[0.3em] text-white/20 group-hover:text-white transition-colors">
                   Awaiting Talent
                 </p>
               </button>
@@ -319,10 +306,10 @@ const ViewProject = () => {
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent" />
               <div className="flex justify-between items-start mb-8">
                 <div className="space-y-1">
-                  <h2 className="text-2xl font-black italic tracking-tighter text-white uppercase">
+                  <h2 className="text-2xl font-medium italic tracking-tighter text-white uppercase">
                     Secure Access<span className="text-orange-500">.</span>
                   </h2>
-                  <p className="text-[9px] font-black uppercase tracking-widest text-white/20">
+                  <p className="text-[9px] font-medium uppercase tracking-widest text-white/20">
                     End-to-End Encrypted Node Links
                   </p>
                 </div>
@@ -374,10 +361,10 @@ const ViewProject = () => {
               className="relative w-full max-w-2xl bg-[#080808] border border-white/10 rounded-[2.5rem] flex flex-col max-h-[80vh] overflow-hidden shadow-2xl"
             >
               <div className="p-8 border-b border-white/5 bg-white/[0.01]">
-                <h2 className="text-2xl font-black italic uppercase tracking-tighter">
+                <h2 className="text-2xl font-medium italic uppercase tracking-tighter">
                   Assign Professional<span className="text-orange-500">.</span>
                 </h2>
-                <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em]">
+                <p className="text-[12px] font-medium text-white/20 uppercase tracking-[0.2em]">
                   Deploying Node to Talent Network
                 </p>
               </div>
@@ -385,7 +372,7 @@ const ViewProject = () => {
                 {fetchingTeam ? (
                   <div className="py-20 flex flex-col items-center opacity-20 animate-pulse">
                     <UserCircle size={48} />
-                    <p className="text-[10px] font-black mt-4 uppercase">
+                    <p className="text-[12px] font-medium mt-4 uppercase">
                       Syncing Registry...
                     </p>
                   </div>
@@ -396,17 +383,17 @@ const ViewProject = () => {
                       className="group flex items-center justify-between p-5 bg-white/[0.02] border border-white/5 rounded-2xl hover:bg-white/[0.04] transition-all"
                     >
                       <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white/30 font-black text-xl group-hover:bg-orange-500 group-hover:text-black transition-all shadow-inner">
+                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white/30 font-medium text-xl group-hover:bg-orange-500 group-hover:text-black transition-all shadow-inner">
                           {member.name.charAt(0)}
                         </div>
                         <div className="space-y-0.5">
-                          <h4 className="text-sm font-black uppercase italic tracking-tight">
+                          <h4 className="text-sm font-medium uppercase italic tracking-tight">
                             {member.name}{" "}
                             <span
                               className={`w-1.5 h-1.5 rounded-full inline-block ml-2 ${member.status === "busy" ? "bg-red-500" : "bg-green-500 animate-pulse"}`}
                             />
                           </h4>
-                          <p className="text-[9px] font-black text-white/20 uppercase tracking-widest">
+                          <p className="text-[9px] font-medium text-white/20 uppercase tracking-widest">
                             {member.skills.join(" // ")}
                           </p>
                         </div>
@@ -414,7 +401,7 @@ const ViewProject = () => {
                       <button
                         disabled={assigning}
                         onClick={() => handleAssign(member._id)}
-                        className="px-6 py-2.5 bg-white/5 hover:bg-orange-500 hover:text-black rounded-xl text-[10px] font-black uppercase tracking-widest transition-all"
+                        className="px-6 py-2.5 bg-white/5 hover:bg-orange-500 hover:text-black rounded-xl text-[12px] font-medium uppercase tracking-widest transition-all"
                       >
                         SELECT
                       </button>
@@ -442,14 +429,14 @@ const LinkField = ({ label, url }) => {
   };
   return (
     <div className="space-y-3 group">
-      <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20 ml-2 group-hover:text-orange-500 transition-colors">
+      <label className="text-[12px] font-medium uppercase tracking-[0.2em] text-white/20 ml-2 group-hover:text-orange-500 transition-colors">
         {label}
       </label>
       <div className="relative flex items-center">
         <input
           readOnly
           value={url}
-          className="w-full bg-white/[0.03] border border-white/5 rounded-2xl py-4 px-6 text-[10px] font-black text-white/40 outline-none truncate"
+          className="w-full bg-white/[0.03] border border-white/5 rounded-2xl py-4 px-6 text-[12px] font-medium text-white/40 outline-none truncate"
         />
         <button
           onClick={handleCopy}
@@ -491,7 +478,7 @@ const GlassInfoCard = ({ title, children, className }) => (
   <SpotlightCard
     className={`bg-[#050505]/60 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8 flex flex-col shadow-2xl group ${className}`}
   >
-    <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20 mb-6 group-hover:text-orange-500 transition-colors uppercase">
+    <h3 className="text-[12px] font-medium tracking-[0.4em]  mb-6 text-orange-500 transition-colors uppercase">
       {title}
     </h3>
     {children}
@@ -508,10 +495,10 @@ const DetailCard = ({ label, value, icon, color, bgColor }) => (
     >
       {React.cloneElement(icon, { size: 20 })}
     </div>
-    <p className="text-[10px] font-black uppercase tracking-widest text-white/20 mb-1">
+    <p className="text-[12px] font-medium uppercase  text-white/20 mb-1">
       {label}
     </p>
-    <h4 className="text-xl font-black text-white italic tracking-tighter truncate uppercase">
+    <h4 className="text-xl font-medium text-white italic tracking-tighter truncate uppercase">
       {value}
     </h4>
   </motion.div>
@@ -520,15 +507,15 @@ const DetailCard = ({ label, value, icon, color, bgColor }) => (
 const ProfileHeader = ({ name, subtitle, color = "bg-orange-500" }) => (
   <div className="flex items-center gap-5 shrink-0">
     <div
-      className={`w-16 h-16 rounded-[1.2rem] ${color} flex items-center justify-center text-black text-2xl font-black shadow-lg shrink-0`}
+      className={`w-16 h-16 rounded-[1.2rem] ${color} flex items-center justify-center text-black text-2xl font-medium shadow-lg shrink-0`}
     >
       {name?.charAt(0)}
     </div>
     <div className="min-w-0">
-      <h4 className="text-xl font-black text-white italic tracking-tighter truncate uppercase leading-tight">
+      <h4 className="text-xl font-medium text-white italic tracking-tighter  uppercase leading-tight">
         {name}
       </h4>
-      <p className="text-[10px] font-black text-orange-500 uppercase tracking-widest opacity-80">
+      <p className="text-[12px] font-medium text-orange-500 uppercase tracking-widest opacity-80">
         {subtitle}
       </p>
     </div>
@@ -537,10 +524,10 @@ const ProfileHeader = ({ name, subtitle, color = "bg-orange-500" }) => (
 
 const ContactItem = ({ icon, label, value }) => (
   <div className="flex items-center justify-between py-3 border-b border-white/[0.03] last:border-0 group/item">
-    <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-white/20 group-hover/item:text-orange-500 transition-colors">
+    <div className="flex items-center gap-3 text-[12px] font-medium uppercase tracking-widest text-orange-500 transition-colors">
       <span className="text-orange-500/60">{icon}</span> {label}
     </div>
-    <span className="text-[11px] font-black text-white/80 truncate ml-4 group-hover/item:text-white transition-colors">
+    <span className="text-[13px] font-medium text-white/80 truncate ml-4 group-hover/item:text-white transition-colors">
       {value || "N/A"}
     </span>
   </div>
