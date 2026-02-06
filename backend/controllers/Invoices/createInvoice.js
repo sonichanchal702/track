@@ -33,9 +33,9 @@ export const createInvoice = async (req, res) => {
         const uploadStream = cloudinary.uploader.upload_stream(
           {
             folder: "invoices",
-            resource_type: "image",
-            format: "pdf",
+            resource_type: "raw",
             public_id: invoiceNumber,
+            content_type: "application/pdf",
           },
           (error, result) => {
             if (error) reject(error);
