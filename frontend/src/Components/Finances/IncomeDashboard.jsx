@@ -55,7 +55,9 @@ const Finance = () => {
             <span className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
               <Banknote size={22} className="text-emerald-500" />
             </span>
-            Financial Overview
+            <h1 className="text-4xl font-black text-white tracking-tighter uppercase italic flex items-center">
+              Finances <span className="text-orange-500">.</span>
+            </h1>
           </h1>
           <p className="text-sm text-white/40 mt-1">
             Revenue, expenses & liquidity summary

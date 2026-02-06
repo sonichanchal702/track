@@ -94,7 +94,7 @@ const EditTeamMember = () => {
     return (
       <div className="h-screen flex flex-col items-center justify-center bg-[#020202]">
         <Loader2 className="animate-spin text-orange-500 mb-2" size={32} />
-        <p className="text-orange-500 font-bold tracking-widest text-[10px] uppercase italic">
+        <p className="text-orange-500 font-medium tracking-widest text-[14px] uppercase italic">
           Syncing...
         </p>
       </div>
@@ -111,7 +111,7 @@ const EditTeamMember = () => {
         className="mb-4 flex items-center gap-2 text-white/40 self-center md:ml-[-400px] transition-all"
       >
         <ArrowLeft size={16} />
-        <span className="text-[9px] font-black uppercase tracking-[0.2em]">
+        <span className="text-[12px] font-medium uppercase tracking-[0.2em]">
           Cancel
         </span>
       </motion.button>
@@ -122,42 +122,41 @@ const EditTeamMember = () => {
         className="w-full max-w-lg bg-white/[0.02] border border-white/10 rounded-[2rem] p-8 backdrop-blur-3xl shadow-2xl relative z-10"
       >
         <div className="mb-8 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[9px] font-bold uppercase tracking-[0.2em] mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-[12px] font-medium uppercase tracking-[0.2em] mb-3">
             <Edit3 size={12} /> Edit Mode
           </div>
-          <h1 className="text-3xl font-black tracking-tighter italic uppercase text-white leading-none">
+          <h1 className="text-3xl font-medium tracking-tighter italic uppercase text-white leading-none">
             Update <span className="text-orange-500">Node.</span>
           </h1>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5 text-left">
-          {/* NAME - Compact padding */}
           <div className="space-y-1.5">
-            <label className="text-[9px] font-black uppercase tracking-widest text-white/30 px-1">
-              Identity
+            <label className="text-[12px] font-medium uppercase tracking-widest text-white/30 px-1">
+              Name
             </label>
             <input
               name="name"
               value={form.name}
               onChange={handleChange}
-              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/5 focus:border-orange-500/50 outline-none transition-all font-bold text-xs"
+              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/5 focus:border-orange-500/50 outline-none transition-all font-medium text-xs"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-[9px] font-black uppercase tracking-widest text-white/30 px-1 flex items-center gap-1.5">
+              <label className="text-[12px] font-medium uppercase tracking-widest text-white/30 px-1 flex items-center gap-1.5">
                 <Phone size={10} /> Contact
               </label>
               <input
                 name="contact"
                 value={form.contact}
                 onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/5 focus:border-orange-500/50 outline-none transition-all font-bold text-xs"
+                className="w-full text-[12px] px-4 py-3 rounded-xl bg-white/5 border border-white/5 focus:border-orange-500/50 outline-none transition-all font-medium text-xs"
               />
             </div>
             <div className="space-y-1.5">
-              <label className="text-[9px] font-black uppercase tracking-widest text-white/30 px-1 flex items-center gap-1.5">
+              <label className="text-[12px] font-medium uppercase tracking-widest text-white/30 px-1 flex items-center gap-1.5">
                 <Wallet size={10} /> Payout
               </label>
               <input
@@ -165,14 +164,14 @@ const EditTeamMember = () => {
                 name="payoutPerProject"
                 value={form.payoutPerProject}
                 onChange={handleChange}
-                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/5 focus:border-orange-500/50 outline-none transition-all font-bold text-xs"
+                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/5 focus:border-orange-500/50 outline-none transition-all font-medium text-xs"
               />
             </div>
           </div>
 
           {/* SKILLS - Compact input and tags */}
           <div className="space-y-3">
-            <label className="text-[9px] font-black uppercase tracking-widest text-white/30 px-1 flex items-center gap-1.5">
+            <label className="text-[12px] font-medium uppercase tracking-widest text-white/30 px-1 flex items-center gap-1.5">
               <Zap size={10} /> Skills
             </label>
             <div className="flex gap-2">
@@ -205,7 +204,7 @@ const EditTeamMember = () => {
                     setSkillInput("");
                   }
                 }}
-                className="px-5 rounded-xl bg-orange-500 text-black font-black transition-all active:scale-95"
+                className="px-5 rounded-xl bg-orange-500 text-black font-medium transition-all active:scale-95"
               >
                 <Plus size={18} strokeWidth={3} />
               </button>
@@ -220,7 +219,7 @@ const EditTeamMember = () => {
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     exit={{ scale: 0.9, opacity: 0 }}
-                    className="flex items-center gap-2 px-3 py-1.5 text-[9px] font-black uppercase tracking-widest rounded-lg bg-white/5 border border-white/10 text-orange-400 group"
+                    className="flex items-center gap-2 px-3 py-1.5 text-[12px] font-medium uppercase tracking-widest rounded-lg bg-white/5 border border-white/10 text-orange-400 group"
                   >
                     {skill}
                     <X
@@ -236,15 +235,14 @@ const EditTeamMember = () => {
             </div>
           </div>
 
-          {/* COMPACT ACTION BUTTON */}
           <button
             disabled={updating}
-            className="w-full py-4 mt-2 rounded-2xl bg-orange-500 text-black font-black uppercase tracking-[0.2em] text-[10px] hover:bg-orange-400 transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-50"
+            className="w-full py-4 mt-2 rounded-2xl bg-orange-500 text-black font-medium uppercase tracking-[0.2em] text-[14px] hover:bg-orange-400 transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-50"
           >
             {updating ? (
               <Loader2 className="animate-spin" size={16} />
             ) : (
-              "Apply Modifications"
+              "Apply Changes"
             )}
           </button>
         </form>
