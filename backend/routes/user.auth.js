@@ -33,6 +33,8 @@ import { overview } from "../controllers/overview.js";
 import { getClients } from "../controllers/getClients.js";
 import { viewAClient } from "../controllers/viewAClient.js";
 import { editProject } from "../controllers/EditAProject.js";
+import { finances } from "../controllers/Finances/finance.js";
+import { getAllInvoices } from "../controllers/Invoices/viewInvoices.js";
 
 const router = express.Router();
 
@@ -77,10 +79,14 @@ router.patch("/alerts/:id/read", userAuth, readAlert);
 
 //invoice
 router.post("/create-invoice", userAuth, createInvoice);
+router.get("/invoices", userAuth, getAllInvoices);
 router.get("/invoices/:id/download", userAuth, downloadInvoice);
 router.patch("/invoices/:id/paid", userAuth, markInvoicePaid);
 
 //overview
 router.get("/overview", userAuth, overview);
+
+//finance
+router.get("/finances", userAuth, finances);
 
 export default router;

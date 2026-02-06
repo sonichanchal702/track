@@ -27,13 +27,12 @@ export const assignMember = async (req, res) => {
       return res.status(400).send("No team found.");
     }
 
-    //assign
-    //project m chanegs
+   
     project.assignedTo = team._id;
     project.status = "active";
     await project.save();
 
-    //team me changes
+
     (team.status = "busy"), await team.save();
 
     return res.status(200).json({
