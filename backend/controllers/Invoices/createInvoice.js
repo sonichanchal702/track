@@ -33,14 +33,14 @@ export const createInvoice = async (req, res) => {
         const uploadStream = cloudinary.uploader.upload_stream(
           {
             folder: "invoices",
-            resource_type: "raw",
-            public_id: `${invoiceNumber}.pdf`,
-            content_type: "application/pdf", // VERY IMPORTANT
+            resource_type: "image",
+            format: "pdf",
+            public_id: invoiceNumber,
           },
           (error, result) => {
             if (error) reject(error);
             else resolve(result);
-          }
+          },
         );
 
         streamifier.createReadStream(pdfBuffer).pipe(uploadStream);
@@ -145,7 +145,7 @@ export const createInvoice = async (req, res) => {
         "Thank you for your business. Please complete payment within the due date.",
         50,
         760,
-        { align: "center" }
+        { align: "center" },
       );
 
     doc.end(); //MUST be last

@@ -12,7 +12,7 @@ export const addTeamMember = async (req, res) => {
       res
         .status(500)
         .send(
-          "Please add required fields : Name , Contact , Skills , Payout Per Project"
+          "Please add required fields : Name , Contact , Skills , Payout Per Project",
         );
     }
     const isMemberExists = await Team.findOne({
