@@ -13,12 +13,12 @@ export const generateLinks = async (req, res) => {
         freelancerAccessToken: freelancerToken,
         clientAccessToken: clientToken,
       },
-      { new: true }
+      { new: true },
     );
 
     res.json({
-      freelancerToken: `/freelancer/project/${freelancerToken}`,
-      clientToken: `/client/project/${clientToken}`,
+      freelancerToken: freelancerToken,
+      clientToken: clientToken,
     });
   } catch (error) {
     return res.status(500).send("Failed to generate Tokens", error.message);

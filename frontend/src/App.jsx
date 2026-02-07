@@ -23,6 +23,7 @@ import AddTeamMember from "./Components/AddATeamMember.jsx";
 import EditTeamMember from "./Components/EditTeamMember.jsx";
 import IncomeDashboard from "./Components/Finances/IncomeDashboard.jsx";
 import Invoice from "./Components/Invoices/Invoice.jsx";
+import Alerts from "./Components/Alerts/Alerts.jsx";
 
 const ProtectedRoute = ({ children }) => {
   const agency = useSelector((store) => store.agency);
@@ -57,6 +58,9 @@ function AppRoutes() {
         {/* finances */}
         <Route path="income" element={<IncomeDashboard />} />
         <Route path="invoices" element={<Invoice />} />
+
+        {/* alerts */}
+        <Route path="alerts" element={<Alerts />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
