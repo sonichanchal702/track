@@ -5,7 +5,7 @@ export const getProjectTimeline = async (req, res) => {
     const updates = await ProjectUpdate.find({
       projectId: req.params.id,
     })
-      .populate("createdBy", "name")
+      .populate("actorId")
       .sort({ createdAt: -1 });
 
     res.json(updates);

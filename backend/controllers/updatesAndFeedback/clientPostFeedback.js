@@ -14,10 +14,11 @@ export const clientPostFeedback = async (req, res) => {
       return res.status(404).json({ message: "Invalid Clientlink" });
     }
     const update = await ProjectUpdate.create({
-      message,
-      createdBy: project.createdBy,
       projectId: project._id,
+      actorType: "client",
+      actorId: project.clientId,
       type: "feedback",
+      message,
     });
     update.save();
 

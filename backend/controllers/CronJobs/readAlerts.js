@@ -2,7 +2,7 @@ import Alert from "../../models/alert.schema.js";
 
 export const readAlert = async (req, res) => {
   try {
-    const alerts = await Alert.findByIdandUpdate(req.params.id, {
+    const alerts = await Alert.findByIdAndUpdate(req.params.id, {
       isRead: true,
     });
     alerts.save();
