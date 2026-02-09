@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import connectDB from "./connectDB/connectDB.js";
+import "./config/checkDeadlines.js";
 import authRoutes from "./routes/user.auth.js";
 import { apiLimiter } from "./middlewares/rateLimiter.js";
 

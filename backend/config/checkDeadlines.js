@@ -2,32 +2,36 @@ import Alert from "../models/alert.schema.js";
 import Project from "../models/project.schema.js";
 
 export const checkDeadlines = async () => {
-  const today = new Date();
-  const tomorrow = new Date();
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-  tomorrow.setDate(today.getDate() + 1);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
 
-  const projects = await Project.find({
-    deadline: {
-      $gte: today,
-      $lt: tomorrow,
-    },
-    projectStatus: { $ne: "completed" },
-  });
-
-  for (let project of projects) {
-    const exists = await Project.findOne({
-      agencyId: project.createdBy,
-      type: "Deadline",
+    const projects = await Project.find({
+      deadline: { $gte: today, $lt: tomorrow },
+      projectStatus: { $ne: "completed" },
     });
-  }
 
-  if (!exists) {
-    const alert = await Alert.create({
-      agencyId: projects.createdBy,
-      type: "Deadline",
-      projectId: projects._id,
-      message: `Project ${projects.projectName}'s deadline is tomorrow.`,
-    });
+    for (const project of projects) {
+      const alreadyAlerted = await Alert.findOne({
+        projectId: project._id,
+        type: "Deadline",
+      });
+
+      if (alreadyAlerted) continue;
+
+      await Alert.create({
+        agencyId: project.createdBy,
+        projectId: project._id,
+        type: "Deadline",
+        message: `Deadline approaching: "${project.projectName}" is due tomorrow.`,
+      });
+
+      console.log(`⏰ Deadline alert created for ${project.projectName}`);
+    }
+  } catch (err) {
+    console.error("Deadline cron failed:", err.message);
   }
 };

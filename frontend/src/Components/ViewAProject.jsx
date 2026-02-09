@@ -23,6 +23,7 @@ import {
   UserCircle,
   Link as LinkIcon,
   Wallet,
+  History,
 } from "lucide-react";
 import { URL } from "../Constants.js";
 import toast from "react-hot-toast";
@@ -66,16 +67,12 @@ const ViewProject = () => {
     setShowAssignModal(true);
     setFetchingTeam(true);
     try {
-      const res = await axios.get(
-        `${URL}/team`,
-        handleAssifont -
-          {
-            withCredentials: true,
-          },
-      );
+      const res = await axios.get(`${URL}/team`, {
+        withCredentials: true,
+      });
       setTeam(res.data.team || res.data.data || []);
     } catch (err) {
-      toast.error("Network sync failed");
+      toast.error("Something went wrong");
     } finally {
       setFetchingTeam(false);
     }
@@ -91,7 +88,7 @@ const ViewProject = () => {
         { withCredentials: true },
       );
 
-      toast.success("Professional Node Linked");
+      toast.success("Team assigned to project.");
       setShowAssignModal(false);
       fetchProjectDetails(); // Refresh project to show newly assigned member
     } catch (err) {
@@ -126,14 +123,12 @@ const ViewProject = () => {
     );
 
   return (
-    <div className="relative min-h-screen px-6 lg:px-10 py-6 flex flex-col gap-6 overflow-x-hidden selection:bg-orange-500/30 text-[#e5e5e5] font-sans bg-[#020202]">
-      {/* 🌌 AMBIENT GLOWS */}
+    <div className="relative min-h-screen px-6 lg:px-10 py-6 flex flex-col gap-6 overflow-y-hidden selection:bg-orange-500/30 text-[#e5e5e5] font-sans bg-[#020202]">
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-[-5%] right-[-5%] w-[500px] h-[500px] bg-orange-600/10 blur-[120px] rounded-full animate-pulse" />
         <div className="absolute bottom-[-5%] left-[-5%] w-[400px] h-[400px] bg-orange-900/5 blur-[100px] rounded-full" />
       </div>
 
-      {/* 🛠️ TOP NAV */}
       <div className="relative z-10 flex items-center justify-between shrink-0">
         <motion.button
           whileHover={{ x: -5 }}
@@ -143,40 +138,55 @@ const ViewProject = () => {
         >
           <ArrowLeft size={18} /> Back
         </motion.button>
-
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleCreateLinks}
-          className="flex items-center gap-2 px-6 py-2.5 bg-orange-500 text-black font-medium text-xs uppercase tracking-[0.2em] rounded-2xl shadow-[0_12px_30px_rgba(249,115,22,0.3)]"
-        >
-          <LinkIcon size={16} /> Create Links
-        </motion.button>
       </div>
 
       {/* HEADER SECTION */}
-      <div className="relative z-10 flex items-center gap-6 shrink-0 mt-4">
-        <div className="p-4 bg-gradient-to-br from-orange-400 to-orange-700 rounded-[1.8rem] text-black shadow-xl rotate-1 shrink-0">
-          <Briefcase size={28} />
-        </div>
-        <div className="min-w-0">
-          <h1 className="text-4xl font-black text-white tracking-tighter uppercase italic flex items-center">
-            {project?.projectName}
-            <span className="text-orange-500">.</span>
-          </h1>
-          <div className="flex items-center gap-3 text-[12px] font-medium uppercase tracking-[0.3em] text-white/30 mt-2">
-            <span className="bg-green-500/10 px-2 py-0.5 rounded-2xl border border-green-500 text-green-500">
-              {project?.projectStatus}
-            </span>
-            <span className="w-1 h-1 bg-white/10 rounded-full" />
-            <span className="bg-yellow-500/10 px-2 py-0.5 rounded-2xl border border-yellow-500 text-yellow-500">
-              Payment: {project?.paymentStatus}
-            </span>
+      <div className="relative z-10 flex items-center justify-between gap-6 shrink-0 ">
+        <div className="flex items-center gap-6 min-w-0">
+          <div className="p-4 bg-gradient-to-br from-orange-400 to-orange-700 rounded-[1.8rem] text-black shadow-xl rotate-1 shrink-0">
+            <Briefcase size={28} />
           </div>
+
+          <div className="min-w-0">
+            <h1 className="text-4xl font-black text-white tracking-tighter uppercase italic truncate">
+              {project?.projectName}
+              <span className="text-orange-500">.</span>
+            </h1>
+
+            <div className="flex items-center gap-3 text-[12px] font-medium uppercase tracking-[0.3em] text-white/30 mt-2">
+              <span className="bg-green-500/10 px-2 py-0.5 rounded-2xl border border-green-500 text-green-500">
+                {project?.projectStatus}
+              </span>
+              <span className="w-1 h-1 bg-white/10 rounded-full" />
+              <span className="bg-yellow-500/10 px-2 py-0.5 rounded-2xl border border-yellow-500 text-yellow-500">
+                Payment: {project?.paymentStatus}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4 shrink-0">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => navigate(`/dashboard/projects/${id}/timeline`)}
+            className="flex items-center gap-2 px-6 py-2.5 bg-white/5 border border-white/10 text-white/70 hover:text-orange-500 rounded-2xl text-xs uppercase tracking-[0.2em] transition-all"
+          >
+            <History size={16} /> View Timeline
+          </motion.button>
+
+          {/* CREATE LINKS */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleCreateLinks}
+            className="flex items-center gap-2 px-6 py-2.5 bg-orange-500 text-black font-medium text-xs uppercase tracking-[0.2em] rounded-2xl shadow-[0_12px_30px_rgba(249,115,22,0.3)]"
+          >
+            <LinkIcon size={16} /> Create Links
+          </motion.button>
         </div>
       </div>
 
-      {/* CONTENT GRID */}
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 min-h-0 pb-10">
         <div className="lg:col-span-2 flex flex-col gap-6 min-h-0">
           {/* Stats Bar */}
@@ -300,9 +310,6 @@ const ViewProject = () => {
                   <p className="text-[12px] font-medium uppercase tracking-[0.3em] text-white/20 group-hover:text-white transition-colors">
                     Awaiting Talent
                   </p>
-                  <p className="text-[9px] font-bold text-white/10 uppercase mt-1">
-                    Deploy Node to Network
-                  </p>
                 </div>
               </button>
             )}
@@ -367,7 +374,6 @@ const ViewProject = () => {
         )}
       </AnimatePresence>
 
-      {/* 🚀 MODAL 2: TALENT ASSIGNMENT */}
       <AnimatePresence>
         {showAssignModal && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
@@ -413,7 +419,7 @@ const ViewProject = () => {
                       className="group flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-2xl hover:bg-white/[0.04] transition-all hover:border-orange-500/30"
                     >
                       <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white/20 font-medium text-xl group-hover:bg-orange-500 group-hover:text-black transition-all shadow-inner">
+                        <div className="w-12 h-12 rounded-xl flex items-center justify-center font-medium text-xl bg-orange-500 text-black transition-all shadow-inner">
                           {member.name?.charAt(0)}
                         </div>
                         <div className="space-y-1">
@@ -427,7 +433,7 @@ const ViewProject = () => {
                             {member.skills?.map((s, i) => (
                               <span
                                 key={i}
-                                className="text-[8px] font-medium text-white/20 uppercase tracking-widest border border-white/5 px-1.5 rounded"
+                                className="text-[10px] font-medium text-white/50 uppercase tracking-widest border border-white/5 px-1.5 rounded"
                               >
                                 {s}
                               </span>
