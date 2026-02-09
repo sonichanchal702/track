@@ -50,12 +50,18 @@ function Alerts() {
 
       <div className="max-w-4xl mx-auto space-y-10 relative z-10">
         {/* HEADER */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/5 pb-8">
-          <div className="space-y-2">
-            <h1 className="text-5xl font-black tracking-tighter uppercase italic text-white">
-              Alert <span className="text-orange-500">Feed.</span>
+        <div>
+          <h1 className="text-3xl font-semibold tracking-tight flex items-center gap-3">
+            <span className="p-2 rounded-xl bg-blue-500/10 border border-blue-500/20">
+              <Bell size={25} className="text-blue-500" />
+            </span>
+            <h1 className="text-4xl font-black text-white tracking-tighter uppercase italic flex items-center">
+              Notifications <span className="text-orange-500">.</span>
             </h1>
-          </div>
+          </h1>
+          <p className="text-sm text-white/40 mt-1">
+            Updates, feedbacks, system logs & deadlines.
+          </p>
         </div>
 
         {/* ALERTS LIST */}
@@ -68,7 +74,7 @@ function Alerts() {
                 className="py-32 text-center border border-dashed border-white/5 rounded-[3rem] bg-white/[0.01]"
               >
                 <Bell size={40} className="mx-auto text-white/5 mb-4" />
-                <p className="text-white/20 text-xs font-black uppercase tracking-[0.4em]">
+                <p className="text-white/20 text-xs font-medium uppercase tracking-[0.4em]">
                   Zero Active Transmissions
                 </p>
               </motion.div>
@@ -109,9 +115,8 @@ const AlertCard = ({ alert, index }) => {
       className={`relative group w-full bg-white/[0.02] border ${alert.isRead ? "border-white/5" : "border-orange-500/20"} p-6 rounded-[1.8rem] flex items-center justify-between transition-all duration-300`}
     >
       <div className="flex items-center gap-6">
-        {/* ICON NODE */}
         <div
-          className={`h-14 w-14 rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:rotate-6 ${isFeedback ? "bg-blue-500/10 text-blue-400" : "bg-orange-500/10 text-orange-500"}`}
+          className={`h-14 w-14 rounded-2xl flex items-center justify-center shadow-lg transition-transform group-hover:scale-105 ${isFeedback ? "bg-blue-500/10 text-blue-400" : "bg-orange-500/10 text-orange-500"}`}
         >
           {isFeedback ? <MessageSquare size={24} /> : <Zap size={24} />}
         </div>
@@ -120,22 +125,25 @@ const AlertCard = ({ alert, index }) => {
         <div className="space-y-1">
           <div className="flex items-center gap-3">
             <span
-              className={`text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded ${isFeedback ? "bg-blue-500/10 text-blue-500" : "bg-orange-500/10 text-orange-500"}`}
+              className={`text-[9px] font-medium uppercase tracking-widest px-2 py-0.5 rounded ${isFeedback ? "bg-blue-500/10 text-blue-500" : "bg-orange-500/10 text-orange-500"}`}
             >
               {alert.type}
             </span>
-            <span className="text-white/20 text-[10px] font-medium tracking-tighter">
+            <span className="text-white/50 text-[12px] font-medium tracking-tighter">
               {new Date(alert.createdAt).toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
               })}
             </span>
           </div>
-          <h3 className="text-sm font-bold text-white uppercase tracking-tight group-hover:text-orange-500 transition-colors">
+          <h3
+            onClick={() => handleRead()}
+            className="text-sm cursor-pointer font-bold text-white uppercase tracking-tight group-hover:text-orange-500 transition-colors"
+          >
             {alert.message}
           </h3>
           <p className="text-[10px] font-medium text-white/40 uppercase tracking-widest flex items-center gap-1.5 italic">
-            Node:{" "}
+            Project:{" "}
             <span className="text-white/60">
               {alert.projectId?.projectName || "System"}
             </span>
