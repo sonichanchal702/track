@@ -21,7 +21,6 @@ export const checkDeadlines = async () => {
       });
 
       if (alreadyAlerted) continue;
-
       await Alert.create({
         agencyId: project.createdBy,
         projectId: project._id,
