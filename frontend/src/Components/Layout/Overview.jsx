@@ -14,6 +14,7 @@ import {
   TrendingUp,
   ArrowUpRight,
   ArrowDownRight,
+  LayoutDashboard,
 } from "lucide-react";
 import { URL } from "../../Constants.js";
 
@@ -44,12 +45,13 @@ const Overview = () => {
 
   return (
     <div className="px-10 py-8 space-y-10">
-      {/* HEADER */}
-      <div>
-        <p className="text-[10px] uppercase tracking-widest text-white/30 mb-1">
-          System / Intelligence
-        </p>
-        <h1 className="text-2xl font-semibold text-white">Agency Overview</h1>
+      <div className="flex items-center gap-2 shrink-0">
+        <div className="p-2 rounded-2xl bg-orange-500/10 border border-orange-500/20 shadow-lg shadow-orange-500/10">
+          <LayoutDashboard size={24} className="text-orange-500" />
+        </div>
+        <h1 className="text-4xl font-black text-white tracking-tighter uppercase flex flex-row italic leading-none items-center">
+          Your Agency<span className="text-orange-500">.</span>
+        </h1>
       </div>
 
       {/* STATS GRID */}
