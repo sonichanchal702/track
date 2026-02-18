@@ -156,7 +156,7 @@ const TimelineItem = ({ log, index }) => {
             “{log.message}”
           </p>
 
-          <div className="mt-4 pt-3 border-t border-white/5 flex justify-between items-center text-[10px] uppercase tracking-widest text-white/40">
+          <div className="mt-4 pt-3 border-t border-white/5 text-white/70 flex justify-between items-center text-[11px] uppercase tracking-widest text-white/40">
             <span>{log.actorType}</span>
             <span>{new Date(log.createdAt).toDateString()}</span>
           </div>

@@ -25,6 +25,7 @@ import IncomeDashboard from "./Components/Finances/IncomeDashboard.jsx";
 import Invoice from "./Components/Invoices/Invoice.jsx";
 import Alerts from "./Components/Alerts/Alerts.jsx";
 import ProjectTimeline from "./Components/Timeline/ProjectTimeline.jsx";
+import ClientFeedback from "./Components/Timeline/ClientFeedback.jsx";
 
 const ProtectedRoute = ({ children }) => {
   const agency = useSelector((store) => store.agency);
@@ -64,6 +65,11 @@ function AppRoutes() {
         <Route path="alerts" element={<Alerts />} />
         <Route path="projects/:id/timeline" element={<ProjectTimeline />} />
       </Route>
+      {/* client feecback */}
+      <Route
+        path="/user/client/project/:token/feedback"
+        element={<ClientFeedback />}
+      />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

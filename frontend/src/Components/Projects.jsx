@@ -17,7 +17,6 @@ import {
   ChevronRight,
   User,
   Briefcase,
-  ArrowRight,
   Sparkles,
   Plus,
   CalendarClock,
@@ -74,9 +73,9 @@ const Projects = () => {
         {/* LEFT: TITLE */}
         <div className="flex items-center gap-3 shrink-0">
           <div className="p-2.5 rounded-2xl bg-orange-500/10 border border-orange-500/20 shadow-lg shadow-orange-500/10">
-            <Briefcase size={24} className="text-orange-500" />
+            <Sparkles size={24} className="text-orange-500" />
           </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold  text-white tracking-tighter uppercase flex flex-row italic leading-none items-center">
+          <h1 className="text-3xl md:text-4xl font-black text-white tracking-tighter uppercase flex flex-row italic leading-none items-center">
             Projects<span className="text-orange-500">.</span>
           </h1>
         </div>
@@ -111,7 +110,7 @@ const Projects = () => {
               </div>
               <div
                 className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2
-                px-3 py-1.5 rounded-lg bg-medium text-white text-xs font-medium
+                px-3 py-1.5 rounded-lg bg-black text-white text-xs font-medium
                 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100
                 transition-all duration-200 ease-out pointer-events-none whitespace-nowrap z-20"
               >
@@ -146,8 +145,8 @@ const Projects = () => {
           <Link to="/dashboard/create-project" className="w-full md:w-auto">
             <button
               className="flex items-center justify-center gap-2 min-h-[48px] px-6 w-full md:w-auto
-              rounded-2xl bg-orange-600 text-medium font-bold uppercase tracking-wide text-xs
-              transition-transform duration-200 ease-out text-black
+              rounded-2xl bg-orange-600 text-black font-bold uppercase tracking-wide text-xs
+              transition-transform duration-200 ease-out
               hover:bg-orange-500 hover:scale-[1.02] active:scale-95 shadow-lg shadow-orange-500/20"
             >
               Add Project <Plus size={18} strokeWidth={3} />
@@ -183,7 +182,7 @@ const Projects = () => {
           <span className="text-[10px] md:text-xs font-bold text-white/30 uppercase tracking-[0.2em] mb-1">
             Page
           </span>
-          <span className="text-sm md:text-base font-medium text-white">
+          <span className="text-sm md:text-base font-black text-white">
             {pagination.page}
             <span className="text-white/30 mx-2">/</span>
             {pagination.totalPage}
@@ -224,21 +223,26 @@ const ProjectCard = ({ proj, index }) => {
   return (
     <motion.div
       onMouseMove={handleMouseMove}
+      onClick={() => navigate(`/dashboard/viewProject/${proj._id}`)} // Whole card navigates
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0, transition: { delay: index * 0.05 } }}
       exit={{ opacity: 0, scale: 0.95 }}
-      whileHover={{ y: -2 }}
-      className="group relative bg-white/[0.03] backdrop-blur-md border border-white/10 rounded-[1.5rem] md:rounded-[2rem] p-5 md:p-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 lg:gap-8 overflow-hidden shadow-2xl"
+      whileHover={{ y: -2, borderColor: "rgba(249, 115, 22, 0.3)" }}
+      className="group relative bg-white/[0.03] backdrop-blur-md border border-white/10 rounded-[1.5rem] md:rounded-[2rem] p-5 md:p-6 flex flex-col lg:flex-row items-stretch md:items-center justify-between gap-5 md:gap-8 overflow-hidden shadow-2xl cursor-pointer"
     >
       <motion.div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0"
         style={{ background }}
       />
 
-      {/* --- SECTION 1: INFO --- */}
-      <div className="flex items-center gap-4 md:gap-6 flex-1 min-w-0 z-10 w-full lg:w-auto">
+      {/* --- SECTION 1: IDENTITY (Icon + Name) --- */}
+      <div className="flex items-center gap-4 md:gap-6 flex-1 min-w-0 z-10 w-full lg:w-auto pr-16 md:pr-0">
         <div
-          className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110 duration-500 bg-orange-500 text-medium shadow-lg shadow-orange-500/20 text-black`}
+          className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110 duration-500 ${
+            proj.projectStatus === "active"
+              ? "bg-orange-500 text-black shadow-lg shadow-orange-500/20"
+              : "bg-white/10 text-white/50"
+          }`}
         >
           <Briefcase size={20} className="md:w-6 md:h-6" />
         </div>
@@ -248,8 +252,9 @@ const ProjectCard = ({ proj, index }) => {
             {proj.projectName}
           </h3>
           <div className="flex flex-wrap items-center gap-2 mt-1.5 text-[10px] md:text-xs font-medium text-white/50">
-            <span className="flex items-center gap-1.5 text-orange-400 font-bold uppercase tracking-wider">
-              <User size={10} strokeWidth={3} /> {proj.clientId?.name}
+            <span className="flex items-center gap-1.5 text-orange-400 font-bold uppercase tracking-wider truncate">
+              <User size={10} strokeWidth={3} />{" "}
+              {proj.clientId?.name.split(" ")[0]}
             </span>
             <span className="text-white/20">|</span>
             <span
@@ -265,53 +270,47 @@ const ProjectCard = ({ proj, index }) => {
         </div>
       </div>
 
-      {/* --- SECTION 2: STATS --- */}
-      <div className="grid grid-cols-2 md:flex md:flex-row items-start md:items-center gap-y-4 gap-x-8 lg:gap-12 flex-[2] z-10 w-full lg:w-auto border-t border-b border-white/5 lg:border-0 py-4 lg:py-0">
+      {/* --- SECTION 2: STATS (Horizontal Tile Layout) --- */}
+      <div className="flex flex-wrap items-center justify-between md:justify-start gap-4 md:gap-12 flex-[2] z-10 border-t md:border-0 border-white/5 pt-3 md:pt-0">
         <InfoItem label="Budget">
-          <IndianRupee size={14} className="text-orange-500" />
+          <IndianRupee size={12} className="text-orange-500" />
           <span className="font-bold text-white text-sm md:text-base">
             {proj.clientBudget.toLocaleString()}
           </span>
         </InfoItem>
 
         <InfoItem label="Deadline">
-          <Calendar size={14} className="text-orange-500" />
+          <Calendar size={12} className="text-orange-500" />
           <span className="font-bold text-white text-sm md:text-base">
-            {new Date(proj.deadline).toLocaleDateString("en-GB")}
+            {new Date(proj.deadline).toLocaleDateString("en-GB", {
+              day: "2-digit",
+              month: "short",
+            })}
           </span>
         </InfoItem>
 
         <InfoItem label="Lead">
-          <span className="font-bold text-white/70 text-sm md:text-base truncate max-w-[100px]">
+          <span className="font-bold text-white/70 text-sm md:text-base truncate max-w-[80px] md:max-w-[100px]">
             {proj.assignedTo?.name || "Pending"}
           </span>
         </InfoItem>
       </div>
 
-      {/* --- SECTION 3: ACTIONS --- */}
-      <div className="flex items-center gap-3 w-full lg:w-auto justify-end mt-2 lg:mt-0 z-10">
+      {/* --- SECTION 3: ACTIONS (Only Edit Button) --- */}
+      <div className="absolute top-5 right-5 md:static md:top-auto md:right-auto flex items-center z-20">
         <motion.button
           whileHover={{
             scale: 1.05,
             backgroundColor: "rgba(37, 99, 235, 0.2)",
           }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => navigate(`/dashboard/editProject/${proj._id}`)}
-          className="p-3 md:p-3.5 bg-blue-500/10 rounded-xl border border-blue-500/30 text-blue-400 transition-all flex-1 lg:flex-none justify-center flex"
-        >
-          <SquarePen size={18} />
-        </motion.button>
-        <motion.button
-          whileHover={{
-            scale: 1.05,
-            backgroundColor: "#f97316",
-            color: "#000",
+          onClick={(e) => {
+            e.stopPropagation(); // Prevents clicking the card
+            navigate(`/dashboard/editProject/${proj._id}`);
           }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => navigate(`/dashboard/viewProject/${proj._id}`)}
-          className="p-3 md:p-3.5 bg-orange-500/10 rounded-xl border border-orange-500/30 text-orange-500 transition-all flex-1 lg:flex-none justify-center flex"
+          className="p-2.5 md:p-3.5 bg-blue-500/10 rounded-xl border border-blue-500/30 text-blue-400 transition-all flex items-center justify-center hover:bg-blue-500/20"
         >
-          <ArrowRight size={18} strokeWidth={3} />
+          <SquarePen size={16} className="md:w-[18px] md:h-[18px]" />
         </motion.button>
       </div>
     </motion.div>
@@ -319,11 +318,11 @@ const ProjectCard = ({ proj, index }) => {
 };
 
 const InfoItem = ({ label, children }) => (
-  <div className="flex flex-col gap-1 min-w-fit">
-    <p className="text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">
+  <div className="flex flex-col gap-0.5 min-w-fit">
+    <p className="text-[9px] md:text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">
       {label}
     </p>
-    <div className="flex items-center gap-2">{children}</div>
+    <div className="flex items-center gap-1.5">{children}</div>
   </div>
 );
 

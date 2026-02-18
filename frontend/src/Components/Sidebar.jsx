@@ -51,7 +51,7 @@ const DashboardLayout = () => {
     setMenuOpen(false);
     try {
       await axios.post(URL + "/logout");
-      toast.success("Identity Secured.");
+      toast.success("Logged out");
       dispatch(removeAgency());
       navigate("/");
     } catch (err) {
