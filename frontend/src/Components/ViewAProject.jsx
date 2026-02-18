@@ -123,21 +123,49 @@ const ViewProject = () => {
     );
 
   return (
-    <div className="relative min-h-screen px-6 lg:px-10 py-6 flex flex-col gap-6 overflow-y-hidden selection:bg-orange-500/30 text-[#e5e5e5] font-sans bg-[#020202]">
+    <div className="relative min-h-screen px-6 lg:px-10 py-6 flex flex-col gap-6 overflow-x-hidden selection:bg-orange-500/30 text-[#e5e5e5] font-sans bg-[#020202]">
+      {/* 🌌 AMBIENT GLOWS */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-[-5%] right-[-5%] w-[500px] h-[500px] bg-orange-600/10 blur-[120px] rounded-full animate-pulse" />
         <div className="absolute bottom-[-5%] left-[-5%] w-[400px] h-[400px] bg-orange-900/5 blur-[100px] rounded-full" />
       </div>
 
-      <div className="relative z-10 flex items-center justify-between shrink-0">
+      <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4 shrink-0">
         <motion.button
           whileHover={{ x: -5 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate(-1)}
-          className="flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-2xl text-sm font-medium uppercase tracking-widest text-white/60 hover:text-orange-500 transition-all backdrop-blur-3xl"
+          className="flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-2xl text-sm font-medium uppercase tracking-widest text-white/60 hover:text-orange-500 transition-all backdrop-blur-3xl w-fit"
         >
           <ArrowLeft size={18} /> Back
         </motion.button>
+
+        {/* TOP RIGHT ACTION BUTTONS */}
+        <div className="flex items-center gap-3 w-full md:w-auto">
+          {/* VIEW TIMELINE BUTTON */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => navigate(`/dashboard/projects/${id}/timeline`)}
+            className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2.5 bg-white/5 border border-white/10 text-white/70 hover:text-orange-500 hover:border-orange-500/30 rounded-2xl text-xs uppercase tracking-[0.2em] transition-all font-bold"
+          >
+            <History size={16} />{" "}
+            <span className="hidden sm:inline">View Timeline</span>{" "}
+            <span className="sm:hidden">Timeline</span>
+          </motion.button>
+
+          {/* CREATE LINKS BUTTON */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleCreateLinks}
+            className="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2.5 bg-orange-500 text-black font-medium text-xs uppercase tracking-[0.2em] rounded-2xl shadow-[0_12px_30px_rgba(249,115,22,0.3)]"
+          >
+            <LinkIcon size={16} />{" "}
+            <span className="hidden sm:inline">Create Links</span>{" "}
+            <span className="sm:hidden">Links</span>
+          </motion.button>
+        </div>
       </div>
 
       {/* HEADER SECTION */}
@@ -163,27 +191,6 @@ const ViewProject = () => {
               </span>
             </div>
           </div>
-        </div>
-
-        <div className="flex items-center gap-4 shrink-0">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => navigate(`/dashboard/projects/${id}/timeline`)}
-            className="flex items-center gap-2 px-6 py-2.5 bg-white/5 border border-white/10 text-white/70 hover:text-orange-500 rounded-2xl text-xs uppercase tracking-[0.2em] transition-all"
-          >
-            <History size={16} /> View Timeline
-          </motion.button>
-
-          {/* CREATE LINKS */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleCreateLinks}
-            className="flex items-center gap-2 px-6 py-2.5 bg-orange-500 text-black font-medium text-xs uppercase tracking-[0.2em] rounded-2xl shadow-[0_12px_30px_rgba(249,115,22,0.3)]"
-          >
-            <LinkIcon size={16} /> Create Links
-          </motion.button>
         </div>
       </div>
 
@@ -243,7 +250,7 @@ const ViewProject = () => {
               {project?.deliverables?.map((item, i) => (
                 <span
                   key={i}
-                  className="px-4 py-1.5 bg-orange-500/10 border border-orange-500/20 rounded-xl text-[12px] font-medium uppercase tracking-widest text-orange-400"
+                  className="px-4 py-1.5 bg-orange-500/10 border border-orange-500/20 rounded-xl text-[10px] font-black uppercase tracking-widest text-orange-400"
                 >
                   {item}
                 </span>
@@ -252,6 +259,7 @@ const ViewProject = () => {
           </SpotlightCard>
         </div>
 
+        {/* RIGHT COLUMN */}
         <div className="flex flex-col gap-6 min-h-0">
           <GlassInfoCard title="Primary Client" className="flex-1">
             <ProfileHeader name={project?.clientId?.name || "Client Name"} />
@@ -310,6 +318,9 @@ const ViewProject = () => {
                   <p className="text-[12px] font-medium uppercase tracking-[0.3em] text-white/20 group-hover:text-white transition-colors">
                     Awaiting Talent
                   </p>
+                  <p className="text-[9px] font-bold text-white/10 uppercase mt-1">
+                    Deploy Node to Network
+                  </p>
                 </div>
               </button>
             )}
@@ -337,10 +348,10 @@ const ViewProject = () => {
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent" />
               <div className="flex justify-between items-start mb-8">
                 <div className="space-y-1">
-                  <h2 className="text-2xl font-medium italic tracking-tighter text-white uppercase">
+                  <h2 className="text-2xl font-black italic tracking-tighter text-white uppercase">
                     Secure Access<span className="text-orange-500">.</span>
                   </h2>
-                  <p className="text-[12px] font-bold uppercase tracking-widest text-white/20">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-white/20">
                     End-to-End Encrypted Node Links
                   </p>
                 </div>
@@ -353,19 +364,19 @@ const ViewProject = () => {
               </div>
               <div className="space-y-6">
                 <LinkField
-                  label="Client Access Node"
+                  label="Client Access Link"
                   url={
                     links
-                      ? `${window.location.origin}/client/${links.clientToken}`
-                      : "INITIALIZING ENCRYPTION..."
+                      ? `${window.location.origin}/user/client/project/${links.clientToken}/feedback`
+                      : "Generating Link..."
                   }
                 />
                 <LinkField
-                  label="Professional Access Node"
+                  label="Team Access Link"
                   url={
                     links
-                      ? `${window.location.origin}/talent/${links.freelancerToken}`
-                      : "INITIALIZING ENCRYPTION..."
+                      ? `${window.location.origin}/user/talent/project/${links.freelancerToken}/update`
+                      : "Generating Link..."
                   }
                 />
               </div>
@@ -374,6 +385,7 @@ const ViewProject = () => {
         )}
       </AnimatePresence>
 
+      {/* 🚀 MODAL 2: TALENT ASSIGNMENT */}
       <AnimatePresence>
         {showAssignModal && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
@@ -391,10 +403,10 @@ const ViewProject = () => {
               className="relative w-full max-w-2xl bg-[#080808] border border-white/10 rounded-[2.5rem] flex flex-col max-h-[80vh] overflow-hidden shadow-2xl"
             >
               <div className="p-8 border-b border-white/5 bg-white/[0.01]">
-                <h2 className="text-2xl font-medium italic uppercase tracking-tighter">
+                <h2 className="text-2xl font-black italic uppercase tracking-tighter">
                   Assign Professional<span className="text-orange-500">.</span>
                 </h2>
-                <p className="text-[12px] font-bold text-white/20 uppercase tracking-[0.2em]">
+                <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.2em]">
                   Deploying Node to Talent Network
                 </p>
               </div>
@@ -402,7 +414,7 @@ const ViewProject = () => {
                 {fetchingTeam ? (
                   <div className="py-20 flex flex-col items-center opacity-20 animate-pulse">
                     <UserCircle size={48} />
-                    <p className="text-[12px] font-bold mt-4 uppercase tracking-[0.3em]">
+                    <p className="text-[10px] font-bold mt-4 uppercase tracking-[0.3em]">
                       Syncing Registry...
                     </p>
                   </div>
@@ -419,7 +431,7 @@ const ViewProject = () => {
                       className="group flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-2xl hover:bg-white/[0.04] transition-all hover:border-orange-500/30"
                     >
                       <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 rounded-xl flex items-center justify-center font-medium text-xl bg-orange-500 text-black transition-all shadow-inner">
+                        <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white/20 font-black text-xl group-hover:bg-orange-500 group-hover:text-black transition-all shadow-inner">
                           {member.name?.charAt(0)}
                         </div>
                         <div className="space-y-1">
@@ -433,7 +445,7 @@ const ViewProject = () => {
                             {member.skills?.map((s, i) => (
                               <span
                                 key={i}
-                                className="text-[10px] font-medium text-white/50 uppercase tracking-widest border border-white/5 px-1.5 rounded"
+                                className="text-[8px] font-black text-white/20 uppercase tracking-widest border border-white/5 px-1.5 rounded"
                               >
                                 {s}
                               </span>
@@ -444,7 +456,7 @@ const ViewProject = () => {
                       <button
                         disabled={assigning}
                         onClick={() => handleAssign(member._id)}
-                        className="px-6 py-2.5 bg-white/5 hover:bg-orange-500 hover:text-black rounded-xl text-[12px] font-medium uppercase tracking-widest transition-all disabled:opacity-30"
+                        className="px-6 py-2.5 bg-white/5 hover:bg-orange-500 hover:text-black rounded-xl text-[10px] font-black uppercase tracking-widest transition-all disabled:opacity-30"
                       >
                         {assigning ? "DEPLOYNIG..." : "SELECT"}
                       </button>
@@ -472,14 +484,14 @@ const LinkField = ({ label, url }) => {
   };
   return (
     <div className="space-y-3 group">
-      <label className="text-[12px] font-medium uppercase tracking-[0.2em] text-white/20 ml-2 group-hover:text-orange-500 transition-colors">
+      <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/70 ml-2 group-hover:text-orange-500 transition-colors">
         {label}
       </label>
       <div className="relative flex items-center">
         <input
           readOnly
           value={url}
-          className="w-full bg-white/[0.03] border border-white/5 rounded-2xl py-4 px-6 text-[11px] font-bold text-white/30 outline-none truncate pr-14"
+          className="w-full bg-white/[0.03] border border-white/5 rounded-2xl py-4 px-6 text-[13px] font-bold text-white/80 outline-none truncate pr-14"
         />
         <button
           onClick={handleCopy}
@@ -521,7 +533,7 @@ const GlassInfoCard = ({ title, children, className }) => (
   <SpotlightCard
     className={`bg-[#050505]/60 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8 flex flex-col shadow-2xl group ${className}`}
   >
-    <h3 className="text-[12px] font-medium tracking-[0.4em] mb-6 text-orange-500 transition-colors uppercase">
+    <h3 className="text-[10px] font-black tracking-[0.4em] mb-6 text-orange-500 transition-colors uppercase">
       {title}
     </h3>
     {children}
@@ -538,7 +550,7 @@ const DetailCard = ({ label, value, icon, color, bgColor }) => (
     >
       {React.cloneElement(icon, { size: 20, strokeWidth: 2.5 })}
     </div>
-    <p className="text-[12px] font-medium uppercase text-white/20 mb-1 tracking-widest">
+    <p className="text-[10px] font-black uppercase text-white/20 mb-1 tracking-widest">
       {label}
     </p>
     <h4 className="text-xl font-bold text-white italic tracking-tighter truncate uppercase">
@@ -550,7 +562,7 @@ const DetailCard = ({ label, value, icon, color, bgColor }) => (
 const ProfileHeader = ({ name, subtitle, color = "bg-orange-500" }) => (
   <div className="flex items-center gap-5 shrink-0">
     <div
-      className={`w-14 h-14 rounded-[1.2rem] ${color} flex items-center justify-center text-black text-2xl font-medium shadow-lg shrink-0`}
+      className={`w-14 h-14 rounded-[1.2rem] ${color} flex items-center justify-center text-black text-2xl font-black shadow-lg shrink-0`}
     >
       {name?.charAt(0)}
     </div>
@@ -559,7 +571,7 @@ const ProfileHeader = ({ name, subtitle, color = "bg-orange-500" }) => (
         {name}
       </h4>
       {subtitle && (
-        <p className="text-[12px] font-medium text-orange-500 uppercase tracking-widest opacity-80 mt-0.5">
+        <p className="text-[10px] font-black text-orange-500 uppercase tracking-widest opacity-80 mt-0.5">
           {subtitle}
         </p>
       )}
@@ -569,7 +581,7 @@ const ProfileHeader = ({ name, subtitle, color = "bg-orange-500" }) => (
 
 const ContactItem = ({ icon, label, value }) => (
   <div className="flex items-center justify-between py-3 border-b border-white/[0.03] last:border-0 group/item">
-    <div className="flex items-center gap-3 text-[12px] font-medium uppercase tracking-widest text-orange-500/60 transition-colors group-hover/item:text-orange-500">
+    <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-orange-500/60 transition-colors group-hover/item:text-orange-500">
       {icon} {label}
     </div>
     <span className="text-[12px] font-bold text-white/60 truncate ml-4 group-hover/item:text-white transition-colors">
