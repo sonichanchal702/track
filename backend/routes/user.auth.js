@@ -65,7 +65,7 @@ router.get("/client/:id", userAuth, viewAClient);
 router.post("/projects/:id/generate-links", userAuth, generateLinks); //token generate hote hai
 router.get("/freelancer/project/:token", getFreelancerProject); //freelancer ke token se project find
 router.get("/client/project/:token", getClientToken); //client ke token se projectFind
-router.post("/freelancer/project/:token/update", freelancerPostUpdate); //freelancer post update
+router.post("/talent/project/:token/update", freelancerPostUpdate); //freelancer post update
 router.post("/client/project/:token/feedback", clientPostFeedback); //client post updates
 
 //project timeline

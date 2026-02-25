@@ -26,6 +26,7 @@ import Invoice from "./Components/Invoices/Invoice.jsx";
 import Alerts from "./Components/Alerts/Alerts.jsx";
 import ProjectTimeline from "./Components/Timeline/ProjectTimeline.jsx";
 import ClientFeedback from "./Components/Timeline/ClientFeedback.jsx";
+import FreelancerUpdate from "./Components/Timeline/TeamUpdate.jsx";
 
 const ProtectedRoute = ({ children }) => {
   const agency = useSelector((store) => store.agency);
@@ -69,6 +70,10 @@ function AppRoutes() {
       <Route
         path="/user/client/project/:token/feedback"
         element={<ClientFeedback />}
+      />
+      <Route
+        path="/user/talent/project/:token/update"
+        element={<FreelancerUpdate />}
       />
 
       <Route path="*" element={<Navigate to="/" replace />} />
