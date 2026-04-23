@@ -38,9 +38,6 @@ export default function Landing() {
 
       {/* --- BOTTOM CTA --- */}
       <CTASection />
-
-      {/* --- FOOTER --- */}
-      <Footer />
     </div>
   );
 }
@@ -249,10 +246,8 @@ const HeroSection = () => (
         className="mt-24 relative group"
       >
         <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-orange-500 rounded-[2rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-        <div className="relative bg-zinc-900 border border-white/10 rounded-[2rem] overflow-hidden aspect-video shadow-2xl">
-          <div className="w-full h-full flex items-center justify-center text-white/10 text-9xl font-black">
-            DASHBOARD
-          </div>
+        <div className="relative bg-zinc-900 border border-white/10 rounded-[2rem] overflow-clip aspect-video  shadow-2xl">
+          <img src="/favicon.png" alt="Dashboard Preview" />
         </div>
       </motion.div>
     </div>
@@ -479,70 +474,4 @@ const CTASection = () => (
       </motion.div>
     </div>
   </section>
-);
-
-const Footer = () => (
-  <footer className="py-12 px-6 border-t border-white/10 bg-[#020202] relative z-10">
-    <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-      <div className="col-span-1 md:col-span-2">
-        <div className="flex items-center gap-2 mb-6">
-          <div className="w-6 h-6 bg-orange-500 rounded flex items-center justify-center text-black font-bold text-xs">
-            T
-          </div>
-          <span className="text-lg font-black tracking-tighter text-white">
-            TRACK.
-          </span>
-        </div>
-        <p className="text-white/40 text-sm max-w-xs">
-          The operating system for modern creative agencies. Built for speed,
-          designed for scale.
-        </p>
-      </div>
-
-      <div>
-        <h4 className="text-white font-bold uppercase tracking-widest text-xs mb-6">
-          Product
-        </h4>
-        <ul className="space-y-4 text-sm text-white/40">
-          <li className="hover:text-orange-500 cursor-pointer transition-colors">
-            Features
-          </li>
-          <li className="hover:text-orange-500 cursor-pointer transition-colors">
-            Pricing
-          </li>
-          <li className="hover:text-orange-500 cursor-pointer transition-colors">
-            Changelog
-          </li>
-          <li className="hover:text-orange-500 cursor-pointer transition-colors">
-            Docs
-          </li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 className="text-white font-bold uppercase tracking-widest text-xs mb-6">
-          Legal
-        </h4>
-        <ul className="space-y-4 text-sm text-white/40">
-          <li className="hover:text-orange-500 cursor-pointer transition-colors">
-            Privacy
-          </li>
-          <li className="hover:text-orange-500 cursor-pointer transition-colors">
-            Terms
-          </li>
-          <li className="hover:text-orange-500 cursor-pointer transition-colors">
-            Security
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div className="max-w-6xl mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/20 font-medium uppercase tracking-widest">
-      <p>© 2026 TRACK SYSTEMS INC.</p>
-      <div className="flex gap-6">
-        <Globe size={14} />
-        <span>Made by Gourav</span>
-      </div>
-    </div>
-  </footer>
 );
