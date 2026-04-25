@@ -16,20 +16,22 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173", // frontend
+    origin: ["http://localhost:5173", "https://your-frontend.vercel.app"],
     credentials: true,
   }),
 );
+// app.use(
+//   cors({
+//     origin: true,
+//     credentials: true,
+//   }),
+// );
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, "0.0.0.0", () => {
-  console.log("Server running");
-});
-
-// routes
-app.use("/user", authRoutes); //apiLimiter lgana hai.
 
 connectDB().then(() => {
-  app.listen(PORT, () => {
+  app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on PORT ${PORT} 🚀`);
   });
 });
+
+app.use("/user", authRoutes); //apiLimiter lgana hai.
