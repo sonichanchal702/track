@@ -217,33 +217,6 @@ const FreelancerUpdate = () => {
                             : "bg-[#111]/90 border border-white/10 text-white/90 rounded-tl-none hover:border-white/20"
                         }`}
                       >
-                        {/* TAGS FOR BOTH PARTIES */}
-                        <div
-                          className={`flex items-center gap-2 mb-2 sm:mb-3 pb-2 sm:pb-3 border-b ${
-                            isFreelancer ? "border-white/20" : "border-white/10"
-                          }`}
-                        >
-                          <span
-                            className={`text-[10px] sm:text-[10px] font-medium uppercase tracking-widest flex items-center gap-1.5 ${
-                              isFreelancer ? "text-white/90" : "text-blue-400"
-                            }`}
-                          >
-                            {isFreelancer ? (
-                              <>
-                                <Zap size={10} className="sm:w-3 sm:h-3" /> You
-                              </>
-                            ) : (
-                              <>
-                                <ShieldCheck
-                                  size={10}
-                                  className="sm:w-3 sm:h-3"
-                                />{" "}
-                                Client Feedback
-                              </>
-                            )}
-                          </span>
-                        </div>
-
                         <span className="whitespace-pre-wrap">
                           {item.message}
                         </span>
