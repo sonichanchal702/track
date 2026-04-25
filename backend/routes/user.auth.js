@@ -35,6 +35,7 @@ import { viewAClient } from "../controllers/viewAClient.js";
 import { editProject } from "../controllers/EditAProject.js";
 import { finances } from "../controllers/Finances/finance.js";
 import { getAllInvoices } from "../controllers/Invoices/viewInvoices.js";
+import { userSuggestions } from "../controllers/userSuggestion/userSuggestion.js";
 
 const router = express.Router();
 
@@ -88,5 +89,8 @@ router.get("/overview", userAuth, overview);
 
 //finance
 router.get("/finances", userAuth, finances);
+
+//user gives suggestions
+router.post("/giveSuggestions", userAuth, userSuggestions);
 
 export default router;

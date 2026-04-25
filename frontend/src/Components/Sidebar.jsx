@@ -76,7 +76,7 @@ const DashboardLayout = () => {
                 <div className="w-10 h-10 rounded-xl bg-orange-500 text-black flex items-center justify-center shadow-lg shadow-orange-500/20">
                   <Sparkles size={20} />
                 </div>
-                <span className="text-xl  font-medium text-bold  uppercase tracking-tighter text-white">
+                <span className="text-xl font-medium text-bold uppercase tracking-tighter text-white">
                   Track<span className="text-orange-500">.</span>
                 </span>
               </div>
@@ -182,7 +182,7 @@ const DashboardLayout = () => {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -10 }}
                   transition={{ duration: 0.2 }}
-                  className="text-xl  font-medium   uppercase tracking-tighter whitespace-nowrap text-white"
+                  className="text-xl font-medium uppercase tracking-tighter whitespace-nowrap text-white"
                 >
                   Track<span className="text-orange-500">.</span>
                 </motion.span>
@@ -296,83 +296,91 @@ const ProfileSection = ({
   setMenuOpen,
   handleLogout,
   isMobile,
-}) => (
-  <div className="relative">
-    <AnimatePresence>
-      {menuOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => setMenuOpen(false)}
-          className="fixed  inset-0 z-[140] bg-transparent cursor-default"
-        />
-      )}
-    </AnimatePresence>
+}) => {
+  // Added useNavigate here so the suggestions button can properly navigate
+  const navigate = useNavigate();
 
-    <motion.button
-      whileTap={{ scale: 0.98 }}
-      onClick={() => setMenuOpen(!menuOpen)}
-      className={`relative z-[145] bg-orange-500/10 border-orange-500/20 w-full  flex items-center rounded-2xl p-2 transition-all border  hover:border-white/10 overflow-hidden
-      ${open ? "gap-3" : "justify-center"}`}
-    >
-      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-orange-700 text-black flex items-center justify-center  font-bold text-lg shadow-lg shrink-0">
-        {agency?.name?.[0] || "A"}
-      </div>
+  return (
+    <div className="relative">
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setMenuOpen(false)}
+            className="fixed inset-0 z-[140] bg-transparent cursor-default"
+          />
+        )}
+      </AnimatePresence>
+
+      <motion.button
+        whileTap={{ scale: 0.98 }}
+        onClick={() => setMenuOpen(!menuOpen)}
+        className={`relative z-[145] bg-orange-500/10 border-orange-500/20 w-full flex items-center rounded-2xl p-2 transition-all border hover:border-white/10 overflow-hidden
+        ${open ? "gap-3" : "justify-center"}`}
+      >
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-orange-700 text-black flex items-center justify-center font-bold text-lg shadow-lg shrink-0">
+          {agency?.name?.[0] || "A"}
+        </div>
+
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              className="text-left overflow-hidden whitespace-nowrap min-w-0"
+            >
+              <p className="text-sm font-bold text-white truncate tracking-tighter leading-none mb-1">
+                {agency?.name}
+              </p>
+              <p className="text-[12px] text-white/80 font-medium tracking-widest">
+                {agency?.email}
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.button>
 
       <AnimatePresence>
-        {open && (
+        {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -10 }}
-            className="text-left overflow-hidden whitespace-nowrap min-w-0"
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            className={`absolute z-[150] bg-[#0d0d0d] border border-white/10 rounded-[1rem] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.9)]
+            ${isMobile ? "bottom-20 left-0 right-0" : open ? "bottom-20 left-0 right-0" : "bottom-20 left-14 w-56"}`}
           >
-            <p className="text-sm  font-bold text-white truncate tracking-tighter leading-none mb-1">
-              {agency?.name}
-            </p>
-            <p className="text-[12px] text-white/80  font-medium tracking-widest">
-              {agency?.email}
-            </p>
+            <div className="p-2 space-y-1">
+              <PopoverItem
+                label="View Profile"
+                icon={<UserCog size={16} />}
+                onClick={() => setMenuOpen(false)}
+              />
+              <PopoverItem
+                label="Give Suggestions"
+                icon={<MessageSquare size={16} />}
+                onClick={() => {
+                  setMenuOpen(false);
+                  navigate("/userSuggestions");
+                }}
+              />
+              <div className="h-px bg-white/5 mx-3 my-1" />
+              <PopoverItem
+                label="Logout"
+                icon={<LogOut size={16} />}
+                onClick={handleLogout}
+                danger
+              />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.button>
-
-    <AnimatePresence>
-      {menuOpen && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.9, y: 20 }}
-          transition={{ type: "spring", stiffness: 400, damping: 30 }}
-          className={`absolute z-[150] bg-[#0d0d0d] border border-white/10 rounded-[1rem] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.9)]
-          ${isMobile ? "bottom-20 left-0 right-0" : open ? "bottom-20 left-0 right-0" : "bottom-20 left-14 w-56"}`}
-        >
-          <div className="p-2 space-y-1">
-            <PopoverItem
-              label="View Profile"
-              icon={<UserCog size={16} />}
-              onClick={() => setMenuOpen(false)}
-            />
-            <PopoverItem
-              label="Give Suggestions"
-              icon={<MessageSquare size={16} />}
-              onClick={() => setMenuOpen(false)}
-            />
-            <div className="h-px bg-white/5 mx-3 my-1" />
-            <PopoverItem
-              label="Logout"
-              icon={<LogOut size={16} />}
-              onClick={handleLogout}
-              danger
-            />
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  </div>
-);
+    </div>
+  );
+};
 
 const SidebarItem = ({ to, icon, label, open, end }) => {
   const [hovered, setHovered] = useState(false);
@@ -446,7 +454,7 @@ const SidebarItem = ({ to, icon, label, open, end }) => {
             <motion.div
               initial={{ opacity: 0, x: 10, scale: 0.9 }}
               animate={{ opacity: 1, x: 20, scale: 1 }}
-              className="fixed left-20 px-3 py-1.5 bg-orange-500 text-black text-[10px]  font-medium uppercase tracking-widest rounded-lg shadow-2xl   whitespace-nowrap z-[200] pointer-events-none"
+              className="fixed left-20 px-3 py-1.5 bg-orange-500 text-black text-[10px] font-medium uppercase tracking-widest rounded-lg shadow-2xl whitespace-nowrap z-[200] pointer-events-none"
             >
               {label}
               <div className="absolute left-[-4px] top-1/2 -translate-y-1/2 w-2 h-2 bg-orange-500 rotate-45 rounded-[1px]" />
@@ -463,7 +471,7 @@ const SidebarSection = ({ title, open, children }) => (
     <div
       className={`h-4 flex items-center px-4 mb-2 transition-all duration-300 ${open ? "opacity-100" : "opacity-0"}`}
     >
-      <p className="text-[10px] text-white/60  font-medium uppercase tracking-[0.1rem] whitespace-nowrap overflow-hidden">
+      <p className="text-[10px] text-white/60 font-medium uppercase tracking-[0.1rem] whitespace-nowrap overflow-hidden">
         {title}
       </p>
     </div>
@@ -474,7 +482,7 @@ const SidebarSection = ({ title, open, children }) => (
 const PopoverItem = ({ label, icon, onClick, danger }) => (
   <button
     onClick={onClick}
-    className={`w-full flex items-center gap-3 px-4 py-3 text-[10px]  font-medium uppercase tracking-widest rounded-xl transition-all
+    className={`w-full flex items-center gap-3 px-4 py-3 text-[10px] font-medium uppercase tracking-widest rounded-xl transition-all
     ${danger ? "text-red-500 hover:bg-red-500/10" : "text-white/80 hover:bg-white/5 hover:text-white"}`}
   >
     {icon} <span>{label}</span>

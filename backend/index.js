@@ -20,6 +20,9 @@ app.use(
     credentials: true,
   }),
 );
+app.listen(5001, "0.0.0.0", () => {
+  console.log("Server running");
+});
 
 // routes
 app.use("/user", authRoutes); //apiLimiter lgana hai.
