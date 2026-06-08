@@ -110,14 +110,14 @@ const AddTeamMember = () => {
           <h1 className="text-4xl font-bold tracking-tighter italic uppercase text-white">
             Onboard <span className="text-orange-500">Talent.</span>
           </h1>
-          <p className="text-white/30 text-xs font-medium uppercase tracking-widest">
+          <p className="text-white/70 text-xs font-medium uppercase tracking-widest">
             Register new talent to the pool
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6 text-left">
           <div className="space-y-2">
-            <label className="text-[12px] font-medium uppercase tracking-widest text-white/40 flex items-center gap-2 px-1">
+            <label className="text-[12px] font-medium uppercase tracking-widest text-white/70 flex items-center gap-2 px-1">
               <UserPlus size={12} className="text-orange-500" /> Full Identity
             </label>
             <input
@@ -125,13 +125,13 @@ const AddTeamMember = () => {
               value={form.name}
               onChange={handleChange}
               placeholder="Ex. Gourav Thakur"
-              className="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/5 focus:border-orange-500/50 focus:bg-white/[0.08] outline-none transition-all font-medium text-sm placeholder:text-white/10"
+              className="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/5 focus:border-orange-500/50 focus:bg-white/[0.08] outline-none transition-all font-medium text-sm placeholder:text-white/40"
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <label className="text-[12px] font-medium uppercase tracking-widest text-white/40 flex items-center gap-2 px-1">
+              <label className="text-[12px] font-medium uppercase tracking-widest text-white/70 flex items-center gap-2 px-1">
                 <Phone size={12} className="text-orange-500" /> Connection
               </label>
               <input
@@ -139,12 +139,12 @@ const AddTeamMember = () => {
                 value={form.contact}
                 onChange={handleChange}
                 placeholder="98765-XXXXX"
-                className="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/5 focus:border-orange-500/50 focus:bg-white/[0.08] outline-none transition-all font-medium text-sm placeholder:text-white/10"
+                className="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/5 focus:border-orange-500/50 focus:bg-white/[0.08] outline-none transition-all font-medium text-sm placeholder:text-white/40"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-[12px] font-medium uppercase tracking-widest text-white/40 flex items-center gap-2 px-1">
+              <label className="text-[12px] font-medium uppercase tracking-widest text-white/70 flex items-center gap-2 px-1">
                 <Wallet size={12} className="text-orange-500" /> Payout (₹)
               </label>
               <input
@@ -153,13 +153,13 @@ const AddTeamMember = () => {
                 value={form.payoutPerProject}
                 onChange={handleChange}
                 placeholder="5000"
-                className="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/5 focus:border-orange-500/50 focus:bg-white/[0.08] outline-none transition-all font-medium text-sm placeholder:text-white/10"
+                className="w-full px-5 py-4 rounded-2xl bg-white/5 border border-white/5 focus:border-orange-500/50 focus:bg-white/[0.08] outline-none transition-all font-medium text-sm placeholder:text-white/40"
               />
             </div>
           </div>
 
           <div className="space-y-3">
-            <label className="text-[12px] font-medium uppercase tracking-widest text-white/40 flex items-center gap-2 px-1">
+            <label className="text-[12px] font-medium uppercase tracking-widest text-white/70 flex items-center gap-2 px-1">
               <Zap size={12} className="text-orange-500" /> Expertise Stack
             </label>
 
@@ -178,7 +178,7 @@ const AddTeamMember = () => {
                   }
                 }}
                 placeholder="Add skill (e.g. React)"
-                className="flex-1 px-5 py-4 rounded-2xl bg-white/5 border border-white/5 focus:border-orange-500/50 outline-none transition-all font-medium text-sm placeholder:text-white/10"
+                className="flex-1 px-5 py-4 rounded-2xl bg-white/5 border border-white/5 focus:border-orange-500/50 outline-none transition-all font-medium text-sm placeholder:text-white/40"
               />
               <button
                 type="button"

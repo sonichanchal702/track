@@ -3,7 +3,15 @@ import Project from "../models/project.schema.js";
 
 export const createProject = async (req, res) => {
   try {
-    const agencyId = req.user._id;
+    const agencyId = req.user?._id;
+
+    if (!agencyId) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
+
     const {
       projectName,
       clientName,
@@ -17,16 +25,27 @@ export const createProject = async (req, res) => {
       deliverables,
       projectStatus,
     } = req.body;
+
+    // Validation
     if (
-      !projectName ||
-      !clientName ||
-      !phone ||
+      !projectName?.trim() ||
+      !clientName?.trim() ||
+      !phone?.trim() ||
       !clientBudget ||
-      !deliverables ||
       !deadline ||
-      !description
+      !description?.trim()
     ) {
-      return res.status(400).send("Enter required fielsds");
+      return res.status(400).json({
+        success: false,
+        message: "Please fill all required fields",
+      });
+    }
+
+    if (!Array.isArray(deliverables) || deliverables.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "At least one deliverable is required",
+      });
     }
 
     let client = await Client.findOne({
@@ -35,37 +54,40 @@ export const createProject = async (req, res) => {
     });
 
     if (!client) {
-      client = new Client({
+      client = await Client.create({
         userId: agencyId,
         name: clientName,
         phone,
         email,
       });
-      await client.save();
     }
 
-    //create neww proejct;
-    const newProject = new Project({
+    const project = await Project.create({
       projectName,
       createdBy: agencyId,
       clientId: client._id,
-      clientBudget,
-      teamBudget,
+      clientBudget: Number(clientBudget),
+      teamBudget: Number(teamBudget) || 0,
       description,
       deadline,
       deliverables,
-      paymentStatus,
+      paymentStatus: paymentStatus || "pending",
+      projectStatus: projectStatus || "lead",
       freelancerAccessToken: null,
       clientAccessToken: null,
-      projectStatus: "lead",
     });
-    await newProject.save(); //saving the project in db;
 
     return res.status(201).json({
+      success: true,
       message: "Project created successfully",
-      newProject,
+      project,
     });
   } catch (error) {
-    return res.status(401).send("ERROR OCCURED: " + error.message);
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
