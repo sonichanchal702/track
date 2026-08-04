@@ -1,4 +1,4 @@
-# 🚀 Smart Freelance & Agency Project Management Platform
+# 🚀 Track: Smart Freelance & Agency Project Management Platform
 
 > **A role-based, production-style web application designed to manage freelance and agency workflows with real-time visibility, workload control, and trust mechanisms.**
 
