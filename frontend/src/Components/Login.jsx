@@ -10,8 +10,8 @@ import { addAgency } from "../Store/agencySlice.js";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState("test1@gmail.com");
-  const [password, setPassword] = useState("Test1@123");
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
